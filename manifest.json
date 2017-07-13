@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Cuteguard",
+  "version": "0.1.0",
+
+  "description": "Soft blocks websites with pictures of cute but sad animals",
+
+  "background": {
+      "scripts": ["blockCheck.js"],
+      "persistent": false
+  },
+
+  "options_page": "options.html",
+
+  "permissions": [
+    "storage",
+    "webNavigation"
+  ]
+}
