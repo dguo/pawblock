@@ -1,15 +1,186 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Cuteblock Options</title>
+        <title>PawBlock Options</title>
 
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <style>
+            html {
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            #domain-error, #path-error {
+                margin-top: 0.5em;
+                padding: 3px 5px;
+                display: none;
+            }
+
+            #retrieve-error {
+                display: none;
+            }
+
+            #instructions-list {
+                margin-top: 0;
+                margin-left: 1em;
+            }
+
+            #rules-title {
+                margin-bottom: 0.3em;
+            }
+
+            h1 {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .columns {
+                margin-top: 0.5em;
+            }
+        </style>
     </head>
     <body>
-        <input id="new-domain" type="text"></input>
-        <button id="add-domain" class="btn btn-default">Add</button>
-        <p id="success-message">Successful addition!</p>
-        <ul id="current-domains"></ul>
+        <section class="hero is-info is-bold">
+            <h1 class="title is-2 has-text-centered">
+                <span class="icon is-large">
+                    <i class="fa fa-paw"></i>
+                </span>
+                <span>
+                    PawBlock
+                </span>
+            </h1>
+        </section>
+
+        <div class="columns">
+            <div class="column is-4 is-offset-1">
+                <article class="message is-info">
+                    <div class="message-header">
+                        <p>Instructions</p>
+                    </div>
+                    <div class="message-body content">
+                        <ul id="instructions-list">
+                            <li>
+                                Add rules here to control which pages will be blocked by PawBlock.
+                            </li>
+
+                            <li>
+                                The domain should be something like "facebook.com", and the path should be something like "/messages".
+                            </li>
+                            <li>
+                                With this rule, "facebook.com/messages" will be blocked, but "facebook.com/profile" will be allowed.
+                            <li>
+                                To block a site entirely, just leave the path blank.
+                            </li>
+                            <li>
+                                If something isn't working as expected, feel free to submit an issue or send me a message on <a href="https://twitter.com/dannyguo">Twitter</a>.
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <div class="column is-6">
+                <h2 id="rules-title" class="title is-3">
+                    <span class="icon is-medium">
+                        <i class="fa fa-cog"></i>
+                    </span>
+                    <span>
+                        Rules
+                    </span>
+                </h2>
+
+                <div id="retrieve-error" class="notification is-danger">
+                    <button class="delete" onclick="this.parentNode.remove();">
+                    </button>
+                    There was an error retrieving your saved rules.
+                </div>
+
+                <table class="table is-bordered">
+                    <thead>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Path (optional)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="new-rule-row">
+                            <td>
+                                <input id="new-domain" class="input is-small"
+                                    autofocus type="text">
+                                <p id="domain-error" class="help is-danger">
+                                    Invalid domain
+                                </p>
+                            </td>
+                            <td>
+                                <input id="new-path" class="input is-small"
+                                    type="text">
+                                <p id="path-error" class="help is-danger">
+                                    Invalid path
+                                </p>
+                            </td>
+                            <td>
+                                <a id="add-rule"
+                                    class="button is-small is-success">
+                                    <span>Add</span>
+                                    <span class="icon is-small">
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="column is-1">
+            </div>
+        </div>
+
+        <template id="rule-row">
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button is-small is-danger delete-button">
+                                <span>Delete</span>
+                                <span class="icon is-small">
+                                    <i class="fa fa-trash"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                            <a target="_blank"
+                                class="button is-small is-info try-it-button">
+                                <span>Try It</span>
+                                <span class="icon is-small">
+                                    <i class="fa fa-external-link"></i>
+                                </span>
+                            </a>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </template>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <p>
+                    <strong>PawBlock</strong> by <a href="https://dannyguo.com">Danny Guo</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+                    </p>
+                    <p>
+                    <a class="icon" href="https://github.com/jgthms/bulma">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
         <script src="options.js"></script>
     </body>
 </html>
