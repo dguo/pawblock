@@ -1,13 +1,110 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Cuteblock</title>
+        <title>PawBlock</title>
 
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+        <style>
+            html {
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            h1 {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .hero, h2, #images, #buttons, #options, #message {
+                margin-bottom: 2em;
+            }
+
+            .message {
+                max-width: 500px;
+                display: inline-flex;
+            }
+
+            #button-group {
+                display: inline-flex;
+            }
+
+            .button {
+                min-width: 170px;
+            }
+
+            #message, #happy-image {
+                display: none;
+            }
+        </style>
     </head>
     <body>
-        <p>Hi!</p>
-        <button class="btn btn-default">Button</button>
+        <section class="hero is-info is-bold">
+            <h1 class="title is-2 has-text-centered">
+                <span class="icon is-large">
+                    <i class="fa fa-paw"></i>
+                </span>
+                <span>
+                    PawBlock
+                </span>
+            </h1>
+        </section>
 
+        <h2 class="title is-4 has-text-centered">
+            Are you <b><i>sure</i></b> you want to continue?
+        </h2>
+
+        <div id="buttons" class="has-text-centered">
+            <div id="button-group" class="field is-grouped">
+                <p class="control">
+                    <a id="back-button" class="button is-medium is-success">
+                        Never mind!
+                    </a>
+                </p>
+                <p class="control">
+                    <a id="continue-button" class="button is-medium is-danger">
+                        Yes..
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div id="message" class="has-text-centered">
+            <article class="message is-danger has-text-centered">
+                <div class="message-body">
+                    There was an unexpected error.
+                </div>
+            </article>
+        </div>
+
+        <div id="images" class="has-text-centered">
+            <img id="sad-image" src="https://media.giphy.com/media/12Bpme5pTzGmg8/giphy.gif">
+            <img id="happy-image" src="https://media.giphy.com/media/13G7hmmFr9yuxG/giphy.gif">
+            <!-- <img id="sad-image" src="http://lorempixel.com/500/300/"> -->
+            <!-- <img id="happy-image" src="http://lorempixel.com/501/301/"> -->
+        </div>
+
+        <p id="options" class="has-text-centered">
+            <a id="options-link">Edit your options</a>
+        </p>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <p>
+                    <strong>PawBlock</strong> by <a href="https://dannyguo.com">Danny Guo</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+                    </p>
+                    <p>
+                    <a class="icon" href="https://github.com/jgthms/bulma">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="block.js"></script>
     </body>
 </html>

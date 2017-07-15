@@ -72,7 +72,7 @@ function addRule() {
     // Check for a bad path
     var path = pathInput.value.trim();
 
-    if (path && !/\/.+/.test(path)) {
+    if (path && !/^\/.+/.test(path)) {
         pathError.style.display = 'block';
         pathInput.classList.add('is-danger');
         return;
@@ -81,7 +81,7 @@ function addRule() {
     // Check for a duplicate rule
     var newRule = {
         domain: domain,
-        path: path
+        path: path ? path : ''
     };
 
     if (rules.some(function (rule) {
