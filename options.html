@@ -17,7 +17,7 @@
                 display: none;
             }
 
-            #retrieve-error {
+            #generic-error {
                 display: none;
             }
 
@@ -90,11 +90,11 @@
                     </span>
                 </h2>
 
-                <div id="retrieve-error" class="notification is-danger">
-                    <button class="delete" onclick="this.parentNode.remove();">
-                    </button>
-                    There was an error retrieving your saved rules.
-                </div>
+                <article id="generic-error" class="message is-danger">
+                    <div class="message-body">
+                        There was an unexpected error.
+                    </div>
+                </article>
 
                 <table class="table is-bordered">
                     <thead>
