@@ -130,12 +130,12 @@ function addRule() {
 
 function setStatus(on, saveToStorage) {
   if (on) {
-    onButton.classList.add('is-success');
-    offButton.classList.remove('is-danger');
+    onButton.classList.add('is-info');
+    offButton.classList.remove('is-info');
   }
   else {
-    onButton.classList.remove('is-success');
-    offButton.classList.add('is-danger');
+    onButton.classList.remove('is-info');
+    offButton.classList.add('is-info');
   }
 
   if (saveToStorage) {
@@ -147,6 +147,16 @@ function setStatus(on, saveToStorage) {
       }
     });
   }
+
+  var status = on ? 'on' : 'off';
+  chrome.browserAction.setIcon({
+    path: {
+      '16': 'images/icon-16-' + status + '.png',
+      '32': 'images/icon-32-' + status + '.png',
+      '48': 'images/icon-48-' + status + '.png',
+      '128': 'images/icon-128-' + status + '.png'
+    }
+  });
 }
 
 function restoreSettings() {
@@ -186,6 +196,14 @@ onButton.addEventListener('click', function () {
 
 offButton.addEventListener('click', function () {
   setStatus(false, true);
+});
+
+// Handle the user changing the status from the action popup while the options
+// page is open.
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  if (namespace === 'sync' && changes.on) {
+    setStatus(changes.on.newValue, false);
+  }
 });
 
 document.querySelector('#add-rule').addEventListener('click', addRule);

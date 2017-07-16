@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PawBlock</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <style>
+            html {
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            .hero {
+                margin-bottom: 1em;
+            }
+
+            h1 {
+                margin-top: 0.3em;
+                margin-bottom: 0.3em;
+            }
+
+            #buttons {
+                justify-content: center;
+            }
+
+            #on-button, #off-button {
+                min-width: 55px;
+            }
+        </style>
+    </head>
+    <body class="has-text-centered">
+        <section class="hero is-info is-bold">
+            <h1 class="title is-4">
+                <span class="icon is-medium">
+                    <i class="fa fa-paw"></i>
+                </span>
+                <span>PawBlock</span>
+            </h1>
+        </section>
+
+        <div id="buttons" class="field has-addons">
+            <p class="control">
+                <a id="on-button" class="button">On</a>
+            </p>
+            <p class="control">
+                <a id="off-button" class="button">Off</a>
+            </p>
+        </div>
+
+        <a id="options-link">Edit your options</a>
+
+        <script src="popup.js"></script>
+    </body>
+</html>

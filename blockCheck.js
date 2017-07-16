@@ -1,3 +1,17 @@
+// Disable the browser action icon if PawBlock is turned off
+chrome.storage.sync.get({on: true}, function (items) {
+  if (!items.on) {
+    chrome.browserAction.setIcon({
+      path: {
+        '16': 'images/icon-16-off.png',
+        '32': 'images/icon-32-off.png',
+        '48': 'images/icon-48-off.png',
+        '128': 'images/icon-128-off.png'
+      }
+    });
+  }
+});
+
 chrome.webNavigation.onBeforeNavigate.addListener(function (details) {
   // Avoid iFrame navigations
   if (details.frameId === 0) {
