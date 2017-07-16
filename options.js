@@ -1,4 +1,6 @@
 var rules = [];
+var onButton = document.querySelector('#on-button');
+var offButton = document.querySelector('#off-button');
 
 function showErrorMessage(message) {
   var errorMessage = document.querySelector('#generic-error');
@@ -126,14 +128,37 @@ function addRule() {
   });
 }
 
+function setStatus(on, saveToStorage) {
+  if (on) {
+    onButton.classList.add('is-success');
+    offButton.classList.remove('is-danger');
+  }
+  else {
+    onButton.classList.remove('is-success');
+    offButton.classList.add('is-danger');
+  }
+
+  if (saveToStorage) {
+    chrome.storage.sync.set({on: on}, function () {
+      var error = chrome.runtime.lastError;
+      if (error) {
+        console.error('Failed to set the status:', error.message);
+        showErrorMessage('Failed to save the status.');
+      }
+    });
+  }
+}
+
 function restoreSettings() {
-  chrome.storage.sync.get({rules: []}, function (items) {
+  chrome.storage.sync.get({rules: [], on: true}, function (items) {
     var error = chrome.runtime.lastError;
     if (error) {
       console.error('Failed to retrieve settings:', error.message);
       showErrorMessage('Failed to retrieve your current settings.');
     }
     else {
+      setStatus(items.on, false);
+
       rules = items.rules;
       for (var i = rules.length - 1; i >= 0; i--) {
         prependRuletoTable(rules[i]);
@@ -143,6 +168,15 @@ function restoreSettings() {
 }
 
 document.addEventListener('DOMContentLoaded', restoreSettings);
+
+onButton.addEventListener('click', function () {
+  setStatus(true, true);
+});
+
+offButton.addEventListener('click', function () {
+  setStatus(false, true);
+});
+
 document.querySelector('#add-rule').addEventListener('click', addRule);
 
 // Allow adding a rule by pressing enter on the keyboard rather than

@@ -1,10 +1,20 @@
 chrome.webNavigation.onBeforeNavigate.addListener(function (details) {
   // Avoid iFrame navigations
   if (details.frameId === 0) {
-    chrome.storage.sync.get({rules: [], allowedTabId: -1}, function (items) {
+    var storageQuery = {
+      rules: [],
+      allowedTabId: -1,
+      on: true
+    };
+
+    chrome.storage.sync.get(storageQuery, function (items) {
       var error = chrome.runtime.lastError;
       if (error) {
         console.error('Failed to get data from storage:', error);
+        return;
+      }
+
+      if (!items.on) {
         return;
       }
 

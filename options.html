@@ -26,7 +26,7 @@
                 margin-left: 1em;
             }
 
-            #rules-title {
+            #status-title, #rules-title {
                 margin-bottom: 0.3em;
             }
 
@@ -61,11 +61,14 @@
                     <div class="message-body content">
                         <ul id="instructions-list">
                             <li>
-                                Add rules here to control which pages will be blocked by PawBlock.
+                                Use the status switch to turn PawBlock on and off. You can also quickly toggle it using the button in the browser toolbar.
+                            </li>
+                            <li>
+                                Add rules to control which pages will be blocked by PawBlock.
                             </li>
 
                             <li>
-                                The domain should be something like "facebook.com", and the path should be something like "/messages".
+                                The domain should be like "facebook.com", and the path should be like "/messages".
                             </li>
                             <li>
                                 With this rule, "facebook.com/messages" will be blocked, but "facebook.com/profile" will be allowed.
@@ -81,6 +84,36 @@
             </div>
 
             <div class="column is-6">
+                <article id="generic-error" class="message is-danger">
+                    <div class="message-body">
+                        There was an unexpected error.
+                    </div>
+                </article>
+
+                <h2 id="status-title" class="title is-3">
+                    <span class="icon is-medium">
+                        <i class="fa fa-power-off"></i>
+                    </span>
+                    <span>
+                        Status
+                    </span>
+                </h2>
+
+                <div class="field has-addons">
+                    <p class="control">
+                        <a id="on-button" class="button">
+                            On
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a id="off-button" class="button">
+                            Off
+                        </a>
+                    </p>
+                </div>
+
+                <hr />
+
                 <h2 id="rules-title" class="title is-3">
                     <span class="icon is-medium">
                         <i class="fa fa-cog"></i>
@@ -89,12 +122,6 @@
                         Rules
                     </span>
                 </h2>
-
-                <article id="generic-error" class="message is-danger">
-                    <div class="message-body">
-                        There was an unexpected error.
-                    </div>
-                </article>
 
                 <table class="table is-bordered">
                     <thead>
