@@ -199,3 +199,6 @@ document.querySelectorAll('input').forEach(function (input) {
     }
   }
 });
+
+document.querySelector('#copyright-year').textContent =
+  new Date().getFullYear();

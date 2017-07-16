@@ -55,3 +55,6 @@ document.querySelector('#options-link').onclick = function () {
     window.open(chrome.runtime.getURL('options.html'));
   }
 }
+
+document.querySelector('#copyright-year').textContent =
+  new Date().getFullYear();
