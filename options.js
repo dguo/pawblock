@@ -150,7 +150,13 @@ function setStatus(on, saveToStorage) {
 }
 
 function restoreSettings() {
-  chrome.storage.sync.get({rules: [], on: true}, function (items) {
+  var storageQuery = {
+    on: true,
+    rules: [],
+    schemaVersion: null
+  };
+
+  chrome.storage.sync.get(storageQuery, function (items) {
     var error = chrome.runtime.lastError;
     if (error) {
       console.error('Failed to retrieve settings:', error.message);
@@ -162,6 +168,11 @@ function restoreSettings() {
       rules = items.rules;
       for (var i = rules.length - 1; i >= 0; i--) {
         prependRuletoTable(rules[i]);
+      }
+
+      if (!items.schemaVersion) {
+        // Store the schema version to make future schema changes easier.
+        chrome.storage.sync.set({schemaVersion: '0.1.0'});
       }
     }
   });
