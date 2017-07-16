@@ -1,6 +1,38 @@
 var backButton = document.querySelector('#back-button');
+var happyImage = document.querySelector('#happy-image');
+var sadImage = document.querySelector('#sad-image');
 
-backButton.onclick = function () {
+fetch('https://s3.us-east-2.amazonaws.com/pawblock-sources/images.json')
+.then(function (res) {
+  return res.json();
+}).then(function (json) {
+  var sets = json.sets;
+  sets.push({
+    happy: 'images/default-happy.jpg',
+    sad: 'images/default-sad.jpg'
+  });
+
+  var randomChoice = json.sets[Math.floor(Math.random() * sets.length)];
+  happyImage.src = randomChoice.happy;
+  sadImage.src = randomChoice.sad;
+}).catch(function (err) {
+  console.error('Failed to get images json:', err);
+
+  happyImage.src = 'images/default-happy.jpg';
+  sadImage.src = 'images/default-sad.jpg';
+});
+
+happyImage.onerror = function () {
+  console.error('Failed to load:', happyImage.src);
+  happyImage.src = 'images/default-happy.jpg';
+}
+
+sadImage.onerror = function () {
+  console.error('Failed to load:', sadImage.src);
+  sadImage.src = 'images/default-sad.jpg';
+}
+
+backButton.addEventListener('click', function () {
   // If we're on a new tab, just close it.
   if (window.history.length === 1) {
     window.close();
@@ -8,16 +40,16 @@ backButton.onclick = function () {
   else {
     history.back();
   }
-}
+});
 
 backButton.addEventListener('mouseenter', function () {
-  document.querySelector('#happy-image').style.display = 'inline';
-  document.querySelector('#sad-image').style.display = 'none';
+  happyImage.style.display = 'inline';
+  sadImage.style.display = 'none';
 });
 
 backButton.addEventListener('mouseleave', function () {
-  document.querySelector('#happy-image').style.display = 'none';
-  document.querySelector('#sad-image').style.display = 'inline';
+  happyImage.style.display = 'none';
+  sadImage.style.display = 'inline';
 });
 
 document.querySelector('#continue-button').onclick = function () {
