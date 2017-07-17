@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PawBlock</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+        <style>
+            html {
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            h1 {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .hero, #message {
+                margin-bottom: 2em;
+            }
+
+            .notification {
+                border-radius: 0px;
+            }
+
+            img {
+                max-height: 60vh;
+            }
+
+            #how-it-works {
+                margin-top: 2em;
+                margin-bottom: 0px;
+            }
+
+            #how-it-works .step {
+                margin-bottom: 2em;
+            }
+
+            #faq {
+                padding-top: 3em;
+                padding-bottom: 3em;
+                margin-bottom: 0px;
+            }
+
+            article {
+                max-width: 600px;
+                margin: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="hero is-info is-bold">
+            <h1 class="title is-2 has-text-centered">
+                <span class="icon is-large">
+                    <i class="fa fa-paw"></i>
+                </span>
+                <span>
+                    PawBlock
+                </span>
+            </h1>
+
+            <a href="https://github.com/dguo/pawblock" class="github-corner" aria-label="View source on Github"><svg width="75" height="75" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+        </section>
+
+        <segment class="segment has-text-centered">
+            <h2 class="title is-2">
+                Want to be this carefree?
+            </h2>
+
+            <h3 class="subtitle is-4">
+                Block distracting sites with PawBlock when you need to get something done first.
+            </h3>
+
+            <div class="has-text-centered">
+                <img src="https://i.imgur.com/LY2Wkyy.jpg" alt="carefree-cat">
+            </div>
+        </segment>
+
+        <div id="how-it-works" class="notification has-text-centered">
+            <h3 class="title is-2">
+                How it works
+            </h3>
+
+            <div class="step">
+                <h4 class="title">
+                    1. Install the browser extension
+                </h4>
+                <a class="button is-info is-large">
+                    <span class="icon">
+                        <i class="fa fa-chrome"></i>
+                    </span>
+                    <span>Chrome</span>
+                </a>
+            </div>
+
+            <div class="step">
+                <h4 class="title">
+                    2. Set your rules for which sites to block
+                </h4>
+
+                <img src="https://i.imgur.com/kcjzU98.png" alt="options">
+            </div>
+
+            <div class="step">
+                <h4 class="title">
+                    3. Try to visit a blocked site
+                </h4>
+
+                <img src="https://i.imgur.com/hkVlJ8P.png" alt="block">
+            </div>
+
+            <div class="step">
+                <h4 class="title">
+                    4. Get back to what you were doing
+                </h4>
+
+                <img src="https://i.imgur.com/UYgAsGg.png" alt="happy">
+            </div>
+        </div>
+
+        <div id="faq" class="notification is-dark">
+            <h3 class="title has-text-centered">
+                F.A.Q.
+            </h3>
+
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>Why is PawBlock useful?</p>
+                </div>
+                <div class="message-body">
+                    I found myself visiting distracting sites without even thinking about it while I was doing work. It almost became a reflex to occasionally check out <a href="https://reddit.com">Reddit</a> or <a href="https://twitter.com">Twitter</a>. This extension forces me to consider whether I really want to change the focus of my attention.
+                </div>
+            </article>
+
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>Is PawBlock free?</p>
+                </div>
+                <div class="message-body">
+                    Yes, and it won't ever have premium features that you have to pay for. If you'd like to support the developer, considering making a donation to a worthier cause instead using <a href="https://sublimefund.org">Sublime Fund</a>.
+                </div>
+            </article>
+
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>What if I'm particularly good at multitasking?</p>
+                </div>
+                <div class="message-body">
+                     If that's true, then awesome! I wish I could say the same. But
+                     there seems to be <a href="https://www.npr.org/2013/05/10/182861382/the-myth-of-multitasking">evidence</a> that we just <a href="https://hbr.org/2010/12/you-cant-multi-task-so-stop-tr">aren't that good</a> at it.
+                </div>
+            </article>
+
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>Is PawBlock only available for Chrome?</p>
+                </div>
+                <div class="message-body">
+                   Yes, but I plan to port it to other browsers eventually.
+                </div>
+            </article>
+
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>What are some other extensions that do similar things?</p>
+                </div>
+                <div class="message-body">
+                    Check out this <a href="https://github.com/dguo/pawblock#alternatives">list of alternatives</a>. I made PawBlock anyway because I thought pictures of animals would make it a little more fun to use. It is also intentionally simple because I don't need features like limiting the amount of time I spend on a particular site. I turn PawBlock on, get my work done, and then turn PawBlock off.
+                </div>
+            </article>
+
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>What if I dislike the implicit anthropomorphization in using pictures of "sad" and "happy" animals?</p>
+                </div>
+                <div class="message-body">
+                    I agree that just because an animals looks sad or happy to us in a picture doesn't mean it actually <em>is</em> sad or happy. For PawBlock's purposes though, the goal is to associate visiting a distracting website with a negative emotion and avoiding distraction with a positive emotion. And I think that is harmless.
+                </div>
+            </article>
+        </div>
+
+        <footer class="footer content has-text-centered"
+            style="margin-bottom: 0px; padding-top: 2em; padding-bottom: 2em;">
+            <p>
+                For support, please <a href="https://github.com/dguo/pawblock/issues">submit an issue</a>, or send me a message on <a href="https://twitter.com/dannyguo">Twitter</a>.
+
+            </p>
+            <p>
+                The source code is hosted on
+                <a href="https://github.com/dguo/pawblock">GitHub</a>
+                with a
+                <a href="https://github.com/dguo/pawblock/blob/master/LICENSE">MIT license</a>.
+            </p>
+            <p>
+                &copy;
+                <span id="copyright-year">
+                    <script type="text/javascript">
+                        document.write(new Date().getFullYear());
+                    </script>
+                </span>
+                <a href="https://dannyguo.com">Danny Guo</a>
+            </p>
+
+            <img style="max-height: 200px;" src="images/cat.jpg" alt="cat">
+        </footer>
+    </body>
+</html>
