@@ -1,20 +1,30 @@
 var backButton = document.querySelector('#back-button');
 var happyImage = document.querySelector('#happy-image');
 var sadImage = document.querySelector('#sad-image');
+var sets = [{
+    name: 'cat',
+    happy: 'images/default-happy.jpg',
+    sad: 'images/default-sad.jpg'
+}];
+
+function loadRandomSet() {
+  var randomIndex = Math.floor(Math.random() * sets.length);
+  var choice = sets[randomIndex];
+  // Make sure we load a new set.
+  if (happyImage.src === choice.happy && sets.length > 1) {
+    // Use the next element or the first one if we are at the end of the array.
+    choice = sets[randomIndex + 1 < sets.length ? randomIndex + 1 : 0];
+  }
+  happyImage.src = choice.happy;
+  sadImage.src = choice.sad;
+}
 
 fetch('https://s3.us-east-2.amazonaws.com/pawblock-sources/images.json')
 .then(function (res) {
   return res.json();
 }).then(function (json) {
-  var sets = json.sets;
-  sets.push({
-    happy: 'images/default-happy.jpg',
-    sad: 'images/default-sad.jpg'
-  });
-
-  var randomChoice = json.sets[Math.floor(Math.random() * sets.length)];
-  happyImage.src = randomChoice.happy;
-  sadImage.src = randomChoice.sad;
+  sets = sets.concat(json.sets);
+  loadRandomSet();
 }).catch(function (err) {
   console.error('Failed to get images json:', err);
 
@@ -52,7 +62,11 @@ backButton.addEventListener('mouseleave', function () {
   sadImage.style.display = 'inline';
 });
 
-document.querySelector('#continue-button').onclick = function () {
+document.querySelector('#refresh-button').addEventListener('click', function () {
+  loadRandomSet();
+});
+
+document.querySelector('#continue-button').addEventListener('click', function () {
   var params = window.location.search.substring(1).split('&');
   params.forEach(function (param) {
     var split = param.split('=');
@@ -76,7 +90,7 @@ document.querySelector('#continue-button').onclick = function () {
       });
     }
   });
-}
+});
 
 document.querySelector('#options-link').onclick = function () {
   if (chrome.runtime.openOptionsPage) {

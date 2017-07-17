@@ -31,7 +31,7 @@
             }
 
             .button {
-                min-width: 170px;
+                min-width: 150px;
             }
 
             #message, #happy-image {
@@ -65,12 +65,26 @@
             <div id="button-group" class="field is-grouped">
                 <p class="control">
                     <a id="back-button" class="button is-medium is-success">
-                        Never mind!
+                        <span class="icon">
+                            <i class="fa fa-arrow-left"></i>
+                        </span>
+                        <span>Never mind!</span>
+                    </a>
+                </p>
+                <p class="control">
+                    <a id="refresh-button" class="button is-medium is-info">
+                        <span class="icon">
+                            <i class="fa fa-repeat"></i>
+                        </span>
+                        <span>Not yet</span>
                     </a>
                 </p>
                 <p class="control">
                     <a id="continue-button" class="button is-medium is-danger">
-                        Yes..
+                        <span class="icon">
+                            <i class="fa fa-arrow-right"></i>
+                        </span>
+                        <span>Yes</span>
                     </a>
                 </p>
             </div>
