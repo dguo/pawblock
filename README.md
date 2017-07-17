@@ -1,4 +1,4 @@
-# PawBlock ![logo](images/icon-32-on.png)
+# PawBlock ![logo](chrome/images/icon-32-on.png)
 PawBlock is a browser extension for beating procrastination and excessive web surfing. It blocks websites using the power of pictures of cute animals.
 
 Check out the [landing page](https://dannyguo.com/pawblock) for screenshots and
