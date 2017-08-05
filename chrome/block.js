@@ -32,6 +32,17 @@ fetch('https://s3.us-east-2.amazonaws.com/pawblock-sources/images.json')
   sadImage.src = 'images/default-sad.jpg';
 });
 
+var targetUrl = '';
+var params = window.location.search.substring(1).split('&');
+params.forEach(function (param) {
+  var split = param.split('=');
+  if (split[0] === 'target') {
+    targetUrl = decodeURIComponent(split[1]);
+  }
+});
+
+document.querySelector('#target').textContent = targetUrl;
+
 happyImage.onerror = function () {
   console.error('Failed to load:', happyImage.src);
   happyImage.src = 'images/default-happy.jpg';
@@ -67,26 +78,17 @@ document.querySelector('#refresh-button').addEventListener('click', function () 
 });
 
 document.querySelector('#continue-button').addEventListener('click', function () {
-  var params = window.location.search.substring(1).split('&');
-  params.forEach(function (param) {
-    var split = param.split('=');
-    if (split[0] === 'target') {
-      chrome.tabs.getCurrent(function (tab) {
-        if (tab && tab.id) {
-          chrome.storage.sync.set({allowedTabId: tab.id}, function () {
-            var error = chrome.runtime.lastError;
-            if (error || !split[1]) {
-              document.querySelector('#message').style.display = 'block';
-              return;
-            }
-
-            var url = decodeURIComponent(split[1]);
-
-            // Use replace so that the block page isn't in the
-            // tab's history
-            window.location.replace(url);
-          });
+  chrome.tabs.getCurrent(function (tab) {
+    if (tab && tab.id) {
+      chrome.storage.sync.set({allowedTabId: tab.id}, function () {
+        var error = chrome.runtime.lastError;
+        if (error || !targetUrl) {
+          document.querySelector('#message').style.display = 'block';
+          return;
         }
+
+        // Use replace so that the block page isn't in the tab's history
+        window.location.replace(targetUrl);
       });
     }
   });
