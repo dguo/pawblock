@@ -41,7 +41,8 @@ params.forEach(function (param) {
   }
 });
 
-document.querySelector('#target').textContent = targetUrl;
+document.querySelector('#target').textContent =
+  targetUrl.length > 80 ? targetUrl.substr(0, 80) + '...' : targetUrl;
 
 happyImage.onerror = function () {
   console.error('Failed to load:', happyImage.src);
