@@ -35,7 +35,14 @@
   },
 
   "permissions": [
+    "https://*/*",
+    "http://*/*",
     "storage",
+    "tabs",
     "webNavigation"
+  ],
+
+  "web_accessible_resources": [
+      "block.html"
   ]
 }
