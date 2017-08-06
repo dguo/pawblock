@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:8.2.1-alpine
+    steps:
+      - checkout
+      - run:
+          name: Install packages
+          command: npm install
+      - run:
+          name: Check the code format
+          command: npx prettier --single-quote --no-bracket-spacing --list-different **/*.js
+      - run:
+          name: Lint the code
+          command: npx eslint **/*.js

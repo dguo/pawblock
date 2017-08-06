@@ -1,4 +1,4 @@
-# PawBlock ![logo](chrome/images/icon-32-on.png)
+# PawBlock [![CircleCI](https://circleci.com/gh/dguo/pawblock/tree/master.svg?style=svg)](https://circleci.com/gh/dguo/pawblock/tree/master)
 [PawBlock](https://www.dannyguo.com/pawblock/) is a [browser
 extension](https://en.wikipedia.org/wiki/Browser_extension) for beating
 procrastination and excessive web surfing. It blocks websites using the power
