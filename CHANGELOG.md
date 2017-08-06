@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - A [landing page] to explain PawBlock
 - A changelog
 - The ability to export rules to a JSON file and import them back in
+- The ability to set the strictness of the block: hard means no there is no
+  option to continue, and soft means there is a (configurable) number of
+  seconds that must elapse before the user can continue
 
 ### Changed
 - The rule inputs now have placeholders to guide the user

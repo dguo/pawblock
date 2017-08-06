@@ -176,7 +176,9 @@ function restoreSettings() {
   var storageQuery = {
     on: true,
     rules: [],
-    schemaVersion: null
+    schemaVersion: null,
+    blockType: 'soft',
+    softBlockDelay: 5
   };
 
   chrome.storage.sync.get(storageQuery, function (items) {
@@ -187,6 +189,16 @@ function restoreSettings() {
     }
     else {
       setStatus(items.on, false);
+
+      document.querySelector('#seconds').value = items.softBlockDelay;
+
+      if (items.blockType === 'soft') {
+        document.querySelector('#soft-block').checked = true;
+      }
+      else {
+        document.querySelector('#hard-block').checked = true;
+        document.querySelector('#seconds').disabled = true;
+      }
 
       rules = items.rules;
       for (var i = rules.length - 1; i >= 0; i--) {
@@ -277,4 +289,32 @@ document.querySelector('#filepicker').addEventListener('change', function (e) {
     };
     reader.readAsText(e.target.files[0]);
   }
+});
+
+document.querySelector('#hard-block').addEventListener('change', function () {
+  document.querySelector('#seconds').disabled = true;
+  chrome.storage.sync.set({blockType: 'hard'});
+});
+
+document.querySelector('#soft-block').addEventListener('change', function () {
+  document.querySelector('#seconds').disabled = false;
+  chrome.storage.sync.set({blockType: 'soft'});
+});
+
+document.querySelector('#seconds').addEventListener('input', function (e) {
+  var seconds = 0;
+
+  if (e.target.value) {
+    var cleanValue = e.target.value.replace(/\D/g, '');
+    this.value = cleanValue;
+
+    if (cleanValue) {
+      seconds = parseInt(cleanValue, 10);
+      if (isNaN(seconds)) {
+        seconds = 0;
+      }
+    }
+  }
+
+  chrome.storage.sync.set({softBlockDelay: seconds});
 });

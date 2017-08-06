@@ -79,6 +79,10 @@ document.querySelector('#refresh-button').addEventListener('click', function () 
 });
 
 document.querySelector('#continue-button').addEventListener('click', function () {
+  if (this.getAttribute('disabled')) {
+    return;
+  }
+
   chrome.tabs.getCurrent(function (tab) {
     if (tab && tab.id) {
       chrome.storage.sync.set({allowedTabId: tab.id}, function () {
@@ -105,5 +109,35 @@ document.querySelector('#options-link').onclick = function () {
   }
 }
 
-document.querySelector('#copyright-year').textContent =
-  new Date().getFullYear();
+document.querySelector('#copyright').textContent = new Date().getFullYear();
+
+chrome.storage.sync.get({
+  blockType: 'soft',
+  softBlockDelay: 5
+}, function (items) {
+  var continueButton = document.querySelector('#continue-button');
+  if (items.blockType === 'hard') {
+    continueButton.style.display = 'none';
+  }
+  else if (items.softBlockDelay > 0) {
+    continueButton.setAttribute('disabled', 'true');
+    var continueIcon = document.querySelector('#continue-icon');
+    var continueText = document.querySelector('#continue-text');
+    var continueIconStyle = continueIcon.style.display;
+
+    continueIcon.style.display = 'none';
+    var counter = items.softBlockDelay;
+    continueText.innerText = counter;
+
+    var countdown = setInterval(function () {
+      counter--;
+      continueText.innerText = counter;
+      if (counter <= 0) {
+        clearInterval(countdown);
+        continueButton.removeAttribute('disabled');
+        continueText.innerText = 'Yes';
+        continueIcon.style.display = continueIconStyle;
+      }
+    }, 1000);
+  }
+});

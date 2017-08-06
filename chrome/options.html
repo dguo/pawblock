@@ -50,6 +50,10 @@
             #filepicker {
                 display: none;
             }
+
+            #seconds {
+                max-width: 70px;
+            }
         </style>
     </head>
     <body>
@@ -126,7 +130,44 @@
                     </p>
                 </div>
 
-                <hr />
+                <hr>
+
+                <h2 id="status-title" class="title is-3">
+                    <span class="icon is-medium">
+                        <i class="fa fa-ban"></i>
+                    </span>
+                    <span>
+                        Block Type
+                    </span>
+                </h2>
+
+                <div class="field">
+                    <div class="control">
+                        <label class="radio">
+                            <input id="hard-block" type="radio" name="block-type">
+                            Hard (no option to continue)
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio">
+                            <input id="soft-block" type="radio" name="block-type">
+                            Soft (option to continue after a delay of x seconds)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field has-addons">
+                    <p class="control">
+                        <input id="seconds" class="input" type="text"/>
+                    </p>
+                    <p class="control">
+                    <a class="button is-static">
+                        seconds (minimum of 0)
+                    </a>
+                    </p>
+                </div>
+
+                <hr>
 
                 <div class="level">
                     <div class="level-left">
