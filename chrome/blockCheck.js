@@ -1,5 +1,5 @@
 // Disable the browser action icon if PawBlock is turned off
-chrome.storage.sync.get({on: true}, function (items) {
+chrome.storage.sync.get({on: true}, function(items) {
   if (!items.on) {
     chrome.browserAction.setIcon({
       path: {
@@ -12,7 +12,7 @@ chrome.storage.sync.get({on: true}, function (items) {
   }
 });
 
-chrome.webNavigation.onCommitted.addListener(function (details) {
+chrome.webNavigation.onCommitted.addListener(function(details) {
   // Avoid iFrame navigations
   if (details.frameId !== 0) {
     return;
@@ -24,7 +24,7 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
     on: true
   };
 
-  chrome.storage.sync.get(storageQuery, function (items) {
+  chrome.storage.sync.get(storageQuery, function(items) {
     var error = chrome.runtime.lastError;
     if (error) {
       console.error('Failed to get data from storage:', error);
@@ -45,7 +45,7 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
     var targetDomain = targetUrl.hostname.replace(/^www\./, '');
     var targetPath = targetUrl.pathname.replace(slashes, '').split('/');
 
-    items.rules.forEach(function (rule) {
+    items.rules.forEach(function(rule) {
       if (targetDomain === rule.domain) {
         var rulePath = rule.path.replace(slashes, '').split('/');
 
@@ -56,15 +56,19 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
            allow /foo/bar/bazs, block /foo/bar/baz, and block
            /foo/bar/baz/qux. */
         var i = 0;
-        while (i < targetPath.length && i < rulePath.length &&
-               (rulePath[i] === '' || targetPath[i] === rulePath[i])) {
+        while (
+          i < targetPath.length &&
+          i < rulePath.length &&
+          (rulePath[i] === '' || targetPath[i] === rulePath[i])
+        ) {
           i++;
         }
 
-        if (i === rulePath.length)  {
+        if (i === rulePath.length) {
           var blockedUrl = encodeURIComponent(details.url);
-          var blockPageUrl = chrome.runtime.getURL('block.html?target=' +
-                                                   blockedUrl)
+          var blockPageUrl = chrome.runtime.getURL(
+            'block.html?target=' + blockedUrl
+          );
 
           /* Deal with the edge case of the user adding a rule or turning
              PawBlock on but then trying to navigate backwards in history to
@@ -84,7 +88,7 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
           });
 
           chrome.tabs.executeScript(details.tabId, {
-            code: 'window.location.replace("' + blockPageUrl +'");',
+            code: 'window.location.replace("' + blockPageUrl + '");',
             runAt: 'document_start'
           });
         }

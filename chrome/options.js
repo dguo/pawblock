@@ -26,15 +26,14 @@ function deleteRule() {
   // Remove the rule from the local state, the browser storage, and the UI
   var rule = rules[ruleIndex];
   rules.splice(ruleIndex, 1);
-  chrome.storage.sync.set({rules: rules}, function () {
+  chrome.storage.sync.set({rules: rules}, function() {
     var error = chrome.runtime.lastError;
     if (error) {
       console.error('Failed to delete a rule:', error.message);
       showErrorMessage('Failed to delete the rule.');
       // Add the rule back to the local state
       rules.splice(ruleIndex, 0, rule);
-    }
-    else {
+    } else {
       row.remove();
     }
   });
@@ -48,7 +47,7 @@ function prependRuletoTable(rule) {
   td[1].textContent = rule.path;
 
   var href = 'http://' + rule.domain + rule.path;
-  t.content.querySelector('.try-it-button').href = href
+  t.content.querySelector('.try-it-button').href = href;
 
   var newRow = document.importNode(t.content, true);
   newRow.querySelector('.delete-button').onclick = deleteRule;
@@ -84,22 +83,23 @@ function addRule(domain, path) {
     path: path ? path : ''
   };
 
-  if (rules.some(function (rule) {
-    return rule.domain === newRule.domain && rule.path === newRule.path;
-  })) {
+  if (
+    rules.some(function(rule) {
+      return rule.domain === newRule.domain && rule.path === newRule.path;
+    })
+  ) {
     return {duplicate: true};
   }
 
   // Add the new rule to the local state, the browser storage, and the UI
   rules.unshift(newRule);
-  chrome.storage.sync.set({rules: rules}, function () {
+  chrome.storage.sync.set({rules: rules}, function() {
     var error = chrome.runtime.lastError;
     if (error) {
       console.error('Failed to save a new rule:', error.message);
       showErrorMessage('Failed to add the new rule.');
       rules.shift();
-    }
-    else {
+    } else {
       prependRuletoTable(newRule);
     }
   });
@@ -122,19 +122,16 @@ function addRuleFromUI() {
     domainError.style.display = 'block';
     domainError.textContent = result.domainError;
     domainInput.classList.add('is-danger');
-  }
-  else if (result && result.pathError) {
+  } else if (result && result.pathError) {
     pathError.style.display = 'block';
     pathError.textContent = result.pathError;
     pathInput.classList.add('is-danger');
-  }
-  else if (result && result.duplicate) {
+  } else if (result && result.duplicate) {
     domainError.style.display = 'block';
     domainError.textContent = 'Duplicate rule';
     domainInput.classList.add('is-danger');
     pathInput.classList.add('is-danger');
-  }
-  else {
+  } else {
     domainInput.value = '';
     pathInput.value = '';
     domainInput.focus();
@@ -145,14 +142,13 @@ function setStatus(on, saveToStorage) {
   if (on) {
     onButton.classList.add('is-info');
     offButton.classList.remove('is-info');
-  }
-  else {
+  } else {
     onButton.classList.remove('is-info');
     offButton.classList.add('is-info');
   }
 
   if (saveToStorage) {
-    chrome.storage.sync.set({on: on}, function () {
+    chrome.storage.sync.set({on: on}, function() {
       var error = chrome.runtime.lastError;
       if (error) {
         console.error('Failed to set the status:', error.message);
@@ -181,21 +177,19 @@ function restoreSettings() {
     softBlockDelay: 5
   };
 
-  chrome.storage.sync.get(storageQuery, function (items) {
+  chrome.storage.sync.get(storageQuery, function(items) {
     var error = chrome.runtime.lastError;
     if (error) {
       console.error('Failed to retrieve settings:', error.message);
       showErrorMessage('Failed to retrieve your current settings.');
-    }
-    else {
+    } else {
       setStatus(items.on, false);
 
       document.querySelector('#seconds').value = items.softBlockDelay;
 
       if (items.blockType === 'soft') {
         document.querySelector('#soft-block').checked = true;
-      }
-      else {
+      } else {
         document.querySelector('#hard-block').checked = true;
         document.querySelector('#seconds').disabled = true;
       }
@@ -215,17 +209,17 @@ function restoreSettings() {
 
 document.addEventListener('DOMContentLoaded', restoreSettings);
 
-onButton.addEventListener('click', function () {
+onButton.addEventListener('click', function() {
   setStatus(true, true);
 });
 
-offButton.addEventListener('click', function () {
+offButton.addEventListener('click', function() {
   setStatus(false, true);
 });
 
 // Handle the user changing the status from the action popup while the options
 // page is open.
-chrome.storage.onChanged.addListener(function (changes, namespace) {
+chrome.storage.onChanged.addListener(function(changes, namespace) {
   if (namespace === 'sync' && changes.on) {
     setStatus(changes.on.newValue, false);
   }
@@ -235,17 +229,17 @@ document.querySelector('#add-rule').addEventListener('click', addRuleFromUI);
 
 // Allow adding a rule by pressing enter on the keyboard rather than
 // having to click the button
-document.querySelectorAll('input').forEach(function (input) {
-  input.onkeypress = function (e) {
+document.querySelectorAll('input').forEach(function(input) {
+  input.onkeypress = function(e) {
     if (e.keyCode === 13) {
       addRuleFromUI();
     }
-  }
+  };
 });
 
 document.querySelector('#copyright').textContent = new Date().getFullYear();
 
-document.querySelector('#export').addEventListener('click', function () {
+document.querySelector('#export').addEventListener('click', function() {
   var data = window.btoa(JSON.stringify({rules: rules}));
   var url = 'data:application/json;base64,' + data;
 
@@ -256,20 +250,19 @@ document.querySelector('#export').addEventListener('click', function () {
   });
 });
 
-document.querySelector('#import').addEventListener('click', function () {
+document.querySelector('#import').addEventListener('click', function() {
   hideErrorMessage();
   document.querySelector('#filepicker').click();
 });
 
-document.querySelector('#filepicker').addEventListener('change', function (e) {
+document.querySelector('#filepicker').addEventListener('change', function(e) {
   if (e.target.files.length) {
     var reader = new FileReader();
-    reader.onload = function (readerEvent) {
+    reader.onload = function(readerEvent) {
       var json;
       try {
         json = JSON.parse(readerEvent.target.result);
-      }
-      catch (e) {
+      } catch (e) {
         console.error('Failed to parse the uploaded file.');
         showErrorMessage('Invalid file.');
       }
@@ -277,7 +270,7 @@ document.querySelector('#filepicker').addEventListener('change', function (e) {
       if (Array.isArray(json.rules)) {
         // Reverse so that the rules show up in the same order as they
         // originally were (new rules get prepended).
-        json.rules.reverse().forEach(function (rule) {
+        json.rules.reverse().forEach(function(rule) {
           if (rule.domain && typeof rule.domain === 'string') {
             addRule(
               rule.domain,
@@ -291,17 +284,17 @@ document.querySelector('#filepicker').addEventListener('change', function (e) {
   }
 });
 
-document.querySelector('#hard-block').addEventListener('change', function () {
+document.querySelector('#hard-block').addEventListener('change', function() {
   document.querySelector('#seconds').disabled = true;
   chrome.storage.sync.set({blockType: 'hard'});
 });
 
-document.querySelector('#soft-block').addEventListener('change', function () {
+document.querySelector('#soft-block').addEventListener('change', function() {
   document.querySelector('#seconds').disabled = false;
   chrome.storage.sync.set({blockType: 'soft'});
 });
 
-document.querySelector('#seconds').addEventListener('input', function (e) {
+document.querySelector('#seconds').addEventListener('input', function(e) {
   var seconds = 0;
 
   if (e.target.value) {
