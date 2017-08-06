@@ -8,6 +8,11 @@ function showErrorMessage(message) {
   errorMessage.firstElementChild.textContent = message;
 }
 
+function hideErrorMessage() {
+  var errorMessage = document.querySelector('#generic-error');
+  errorMessage.style.display = 'none';
+}
+
 function deleteRule() {
   // Traverse up the tree to get the parent row node
   var row = this.parentNode;
@@ -52,26 +57,11 @@ function prependRuletoTable(rule) {
   inputRow.parentNode.insertBefore(newRow, inputRow.nextSibling);
 }
 
-function addRule() {
-  var domainInput = document.querySelector('#new-domain');
-  var domainError = document.querySelector('#domain-error');
-  var pathInput = document.querySelector('#new-path');
-  var pathError = document.querySelector('#path-error');
-
-  // Reset all the errors
-  domainInput.classList.remove('is-danger');
-  pathInput.classList.remove('is-danger');
-  domainError.style.display = 'none';
-  pathError.style.display = 'none';
-
-  // Check for a bad domain
-  var domain = domainInput.value.trim();
+function addRule(domain, path) {
+  domain = domain.trim();
 
   if (!domain) {
-    domainError.style.display = 'block';
-    domainError.textContent = 'Domain is required';
-    domainInput.classList.add('is-danger');
-    return;
+    return {domainError: 'Domain is required'};
   }
 
   // Remove 'https://', 'http://', any slashes, and 'www.' for the user
@@ -80,19 +70,12 @@ function addRule() {
   domain = domain.toLowerCase();
 
   if (!/.+\..+/.test(domain)) {
-    domainError.style.display = 'block';
-    domainError.textContent = 'Invalid domain';
-    domainInput.classList.add('is-danger');
-    return;
+    return {domainError: 'Invalid domain'};
   }
 
-  // Check for a bad path
-  var path = pathInput.value.trim().toLowerCase();
-
+  var path = path.trim().toLowerCase();
   if (path && !/^\/.+/.test(path)) {
-    pathError.style.display = 'block';
-    pathInput.classList.add('is-danger');
-    return;
+    return {pathError: 'Invalid path'};
   }
 
   // Check for a duplicate rule
@@ -104,11 +87,7 @@ function addRule() {
   if (rules.some(function (rule) {
     return rule.domain === newRule.domain && rule.path === newRule.path;
   })) {
-    domainError.style.display = 'block';
-    domainError.textContent = 'Duplicate rule';
-    domainInput.classList.add('is-danger');
-    pathInput.classList.add('is-danger');
-    return;
+    return {duplicate: true};
   }
 
   // Add the new rule to the local state, the browser storage, and the UI
@@ -122,11 +101,44 @@ function addRule() {
     }
     else {
       prependRuletoTable(newRule);
-      domainInput.value = '';
-      pathInput.value = '';
-      domainInput.focus();
     }
   });
+}
+
+function addRuleFromUI() {
+  var domainInput = document.querySelector('#new-domain');
+  var domainError = document.querySelector('#domain-error');
+  var pathInput = document.querySelector('#new-path');
+  var pathError = document.querySelector('#path-error');
+
+  // Reset all the errors
+  domainInput.classList.remove('is-danger');
+  pathInput.classList.remove('is-danger');
+  domainError.style.display = 'none';
+  pathError.style.display = 'none';
+
+  var result = addRule(domainInput.value, pathInput.value);
+  if (result && result.domainError) {
+    domainError.style.display = 'block';
+    domainError.textContent = result.domainError;
+    domainInput.classList.add('is-danger');
+  }
+  else if (result && result.pathError) {
+    pathError.style.display = 'block';
+    pathError.textContent = result.pathError;
+    pathInput.classList.add('is-danger');
+  }
+  else if (result && result.duplicate) {
+    domainError.style.display = 'block';
+    domainError.textContent = 'Duplicate rule';
+    domainInput.classList.add('is-danger');
+    pathInput.classList.add('is-danger');
+  }
+  else {
+    domainInput.value = '';
+    pathInput.value = '';
+    domainInput.focus();
+  }
 }
 
 function setStatus(on, saveToStorage) {
@@ -207,17 +219,62 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
   }
 });
 
-document.querySelector('#add-rule').addEventListener('click', addRule);
+document.querySelector('#add-rule').addEventListener('click', addRuleFromUI);
 
 // Allow adding a rule by pressing enter on the keyboard rather than
 // having to click the button
 document.querySelectorAll('input').forEach(function (input) {
   input.onkeypress = function (e) {
     if (e.keyCode === 13) {
-      addRule();
+      addRuleFromUI();
     }
   }
 });
 
-document.querySelector('#copyright-year').textContent =
-  new Date().getFullYear();
+document.querySelector('#copyright').textContent = new Date().getFullYear();
+
+document.querySelector('#export').addEventListener('click', function () {
+  var data = window.btoa(JSON.stringify({rules: rules}));
+  var url = 'data:application/json;base64,' + data;
+
+  chrome.downloads.download({
+    url: url,
+    filename: 'pawblock-rules.json',
+    saveAs: true
+  });
+});
+
+document.querySelector('#import').addEventListener('click', function () {
+  hideErrorMessage();
+  document.querySelector('#filepicker').click();
+});
+
+document.querySelector('#filepicker').addEventListener('change', function (e) {
+  if (e.target.files.length) {
+    var reader = new FileReader();
+    reader.onload = function (readerEvent) {
+      var json;
+      try {
+        json = JSON.parse(readerEvent.target.result);
+      }
+      catch (e) {
+        console.error('Failed to parse the uploaded file.');
+        showErrorMessage('Invalid file.');
+      }
+
+      if (Array.isArray(json.rules)) {
+        // Reverse so that the rules show up in the same order as they
+        // originally were (new rules get prepended).
+        json.rules.reverse().forEach(function (rule) {
+          if (rule.domain && typeof rule.domain === 'string') {
+            addRule(
+              rule.domain,
+              rule.path && typeof rule.path === 'string' ? rule.path : ''
+            );
+          }
+        });
+      }
+    };
+    reader.readAsText(e.target.files[0]);
+  }
+});

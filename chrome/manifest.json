@@ -37,6 +37,7 @@
   "permissions": [
     "https://*/*",
     "http://*/*",
+    "downloads",
     "storage",
     "tabs",
     "webNavigation"

@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - A [landing page] to explain PawBlock
 - A changelog
+- The ability to export rules to a JSON file and import them back in
 
 ### Changed
 - The rule inputs now have placeholders to guide the user

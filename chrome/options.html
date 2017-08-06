@@ -34,10 +34,6 @@
                 margin-left: 1em;
             }
 
-            #status-title, #rules-title {
-                margin-bottom: 0.3em;
-            }
-
             h1 {
                 margin-top: 0.5em;
                 margin-bottom: 0.5em;
@@ -49,6 +45,10 @@
 
             #on-button, #off-button {
                 min-width: 55px;
+            }
+
+            #filepicker {
+                display: none;
             }
         </style>
     </head>
@@ -128,14 +128,37 @@
 
                 <hr />
 
-                <h2 id="rules-title" class="title is-3">
-                    <span class="icon is-medium">
-                        <i class="fa fa-cog"></i>
-                    </span>
-                    <span>
-                        Rules
-                    </span>
-                </h2>
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <h2 id="rules-title" class="title is-3">
+                                <span class="icon is-medium">
+                                    <i class="fa fa-cog"></i>
+                                </span>
+                                <span>
+                                    Rules
+                                </span>
+                            </h2>
+                        </div>
+                        <div class="level-item">
+                            <a id="export" class="button is-small is-info">
+                                <span>Export</span>
+                                <span class="icon is-small">
+                                    <i class="fa fa-download"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="level-item">
+                            <a id="import" class="button is-small is-info">
+                                <span>Import</span>
+                                <span class="icon is-small">
+                                    <i class="fa fa-upload"></i>
+                                </span>
+                            </a>
+                            <input id="filepicker" type="file">
+                        </div>
+                    </div>
+                </div>
 
                 <table class="table is-bordered">
                     <thead>
@@ -220,7 +243,7 @@
             </p>
             <p>
                 &copy;
-                <span id="copyright-year">2017</span>
+                <span id="copyright">2017</span>
                 <a href="https://dannyguo.com">Danny Guo</a>
             </p>
 
