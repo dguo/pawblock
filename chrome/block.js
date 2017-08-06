@@ -54,13 +54,13 @@ sadImage.onerror = function () {
 }
 
 backButton.addEventListener('click', function () {
-  // If we're on a new tab, just close it.
-  if (window.history.length === 1) {
-    window.close();
-  }
-  else {
-    history.back();
-  }
+  window.history.back();
+
+  /* Close the tab if there's nothing to go back to. Use a timeout because
+     there's no way to know if there is backwards history for the tab.
+     Checking the history length doesn't work because forward history is
+     included in the count. Without a timeout, the tab will always close. */
+  setTimeout(window.close, 500);
 });
 
 backButton.addEventListener('mouseenter', function () {
