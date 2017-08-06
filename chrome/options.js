@@ -72,7 +72,7 @@ function addRule(domain, path) {
     return {domainError: 'Invalid domain'};
   }
 
-  var path = path.trim().toLowerCase();
+  path = path.trim().toLowerCase();
   if (path && !/^\/.+/.test(path)) {
     return {pathError: 'Invalid path'};
   }

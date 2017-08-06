@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "prettier"
+    ],
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "chrome": false
+    },
+    "rules": {
+        "no-console": "off"
+    }
+}

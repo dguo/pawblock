@@ -3,6 +3,7 @@
 import argparse
 import os
 from subprocess import call
+import sys
 
 parser = argparse.ArgumentParser(prog='./dev')
 subparsers = parser.add_subparsers(metavar='<command>', title='commands')
@@ -28,8 +29,14 @@ parser_format = subparsers.add_parser('format',
     help='Format the code with Prettier')
 parser_format.set_defaults(func=format)
 
-args, remaining = parser.parse_known_args()
-if 'func' in args:
+def lint(args, remaining):
+    rc = call(DOCKER_RUN + ['npx', 'eslint', '**/*.js'])
+    exit(rc)
+parser_lint = subparsers.add_parser('lint', help='Lint the code with ESLint')
+parser_lint.set_defaults(func=lint)
+
+if len(sys.argv) > 1:
+    args, remaining = parser.parse_known_args()
     args.func(args, remaining)
 else:
     parser.print_help()

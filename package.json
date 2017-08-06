@@ -17,6 +17,8 @@
   },
   "homepage": "https://dannyguo.com/pawblock",
   "dependencies": {
+    "eslint": "4.4.0",
+    "eslint-config-prettier": "2.3.0",
     "prettier": "1.5.3"
   }
 }
