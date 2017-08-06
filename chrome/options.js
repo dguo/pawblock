@@ -74,9 +74,10 @@ function addRule() {
     return;
   }
 
-  // Remove 'https://', 'http://', and 'www.' for the user
-  domain = domain.replace(/https:\/\/|http:\/\//g, '');
+  // Remove 'https://', 'http://', any slashes, and 'www.' for the user
+  domain = domain.replace(/https?:|\//g, '');
   domain = domain.replace(/^www\./, '');
+  domain = domain.toLowerCase();
 
   if (!/.+\..+/.test(domain)) {
     domainError.style.display = 'block';
@@ -86,7 +87,7 @@ function addRule() {
   }
 
   // Check for a bad path
-  var path = pathInput.value.trim();
+  var path = pathInput.value.trim().toLowerCase();
 
   if (path && !/^\/.+/.test(path)) {
     pathError.style.display = 'block';

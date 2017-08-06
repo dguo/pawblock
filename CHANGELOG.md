@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - The rule inputs now have placeholders to guide the user
 - Show the blocked link on the block page
+- When adding a rule, the domain and path are lowercased, and forward slashes
+  are removed from the domain
 
 ### Fixed
 - Fix closing the tab when there is forward history but no back history
