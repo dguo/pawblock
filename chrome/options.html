@@ -71,37 +71,7 @@
         </section>
 
         <div class="columns">
-            <div class="column is-4 is-offset-1">
-                <article class="message is-info">
-                    <div class="message-header">
-                        <p>Instructions</p>
-                    </div>
-                    <div class="message-body content">
-                        <ul id="instructions-list">
-                            <li>
-                                Use the status switch to turn PawBlock on and off. You can also quickly toggle it using the button in the toolbar.
-                            </li>
-                            <li>
-                                Add rules to control which pages will be blocked by PawBlock.
-                            </li>
-
-                            <li>
-                                The domain should be like "facebook.com", and the path should be like "/messages".
-                            </li>
-                            <li>
-                                With this rule, "facebook.com/messages" will be blocked, but "facebook.com/profile" will be allowed.
-                            <li>
-                                Leave the path blank to block a domain entirely.
-                            </li>
-                            <li>
-                                If something isn't working as expected, please <a href="https://github.com/dguo/pawblock/issues">submit an issue</a>, or send me a message on <a href="https://twitter.com/dannyguo">Twitter</a>.
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-            </div>
-
-            <div class="column is-6">
+            <div class="column is-6 is-offset-3">
                 <article id="generic-error" class="message is-danger">
                     <div class="message-body">
                         There was an unexpected error.
@@ -129,6 +99,8 @@
                         </a>
                     </p>
                 </div>
+
+                <p>This can also be quickly toggled using the toolbar button.</p>
 
                 <hr>
 
@@ -177,7 +149,7 @@
                                     <i class="fa fa-cog"></i>
                                 </span>
                                 <span>
-                                    Rules
+                                    Blocked Websites
                                 </span>
                             </h2>
                         </div>
@@ -204,7 +176,7 @@
                 <table class="table is-bordered">
                     <thead>
                         <tr>
-                            <th>Domain</th>
+                            <th>Website</th>
                             <th>Path (optional)</th>
                             <th>Action</th>
                         </tr>
