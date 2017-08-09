@@ -201,7 +201,9 @@ function restoreSettings() {
 
       if (!items.schemaVersion) {
         // Store the schema version to make future schema changes easier.
-        chrome.storage.sync.set({schemaVersion: '0.1.0'});
+        chrome.storage.sync.set({
+          schemaVersion: chrome.runtime.getManifest().version
+        });
       }
     }
   });
