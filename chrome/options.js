@@ -1,3 +1,10 @@
+if (
+  typeof window.browser === 'undefined' &&
+  typeof window.chrome === 'object'
+) {
+  window.browser = window.chrome;
+}
+
 var rules = [];
 var onButton = document.querySelector('#on-button');
 var offButton = document.querySelector('#off-button');
@@ -26,8 +33,8 @@ function deleteRule() {
   // Remove the rule from the local state, the browser storage, and the UI
   var rule = rules[ruleIndex];
   rules.splice(ruleIndex, 1);
-  chrome.storage.sync.set({rules: rules}, function() {
-    var error = chrome.runtime.lastError;
+  browser.storage.sync.set({rules: rules}, function() {
+    var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to delete a rule:', error.message);
       showErrorMessage('Failed to delete the rule.');
@@ -93,8 +100,8 @@ function addRule(domain, path) {
 
   // Add the new rule to the local state, the browser storage, and the UI
   rules.unshift(newRule);
-  chrome.storage.sync.set({rules: rules}, function() {
-    var error = chrome.runtime.lastError;
+  browser.storage.sync.set({rules: rules}, function() {
+    var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to save a new rule:', error.message);
       showErrorMessage('Failed to add the new rule.');
@@ -148,8 +155,8 @@ function setStatus(on, saveToStorage) {
   }
 
   if (saveToStorage) {
-    chrome.storage.sync.set({on: on}, function() {
-      var error = chrome.runtime.lastError;
+    browser.storage.sync.set({on: on}, function() {
+      var error = browser.runtime.lastError;
       if (error) {
         console.error('Failed to set the status:', error.message);
         showErrorMessage('Failed to save the status.');
@@ -158,7 +165,7 @@ function setStatus(on, saveToStorage) {
   }
 
   var status = on ? 'on' : 'off';
-  chrome.browserAction.setIcon({
+  browser.browserAction.setIcon({
     path: {
       '16': 'images/icon-16-' + status + '.png',
       '32': 'images/icon-32-' + status + '.png',
@@ -177,8 +184,8 @@ function restoreSettings() {
     softBlockDelay: 5
   };
 
-  chrome.storage.sync.get(storageQuery, function(items) {
-    var error = chrome.runtime.lastError;
+  browser.storage.sync.get(storageQuery, function(items) {
+    var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to retrieve settings:', error.message);
       showErrorMessage('Failed to retrieve your current settings.');
@@ -201,8 +208,8 @@ function restoreSettings() {
 
       if (!items.schemaVersion) {
         // Store the schema version to make future schema changes easier.
-        chrome.storage.sync.set({
-          schemaVersion: chrome.runtime.getManifest().version
+        browser.storage.sync.set({
+          schemaVersion: browser.runtime.getManifest().version
         });
       }
     }
@@ -221,7 +228,7 @@ offButton.addEventListener('click', function() {
 
 // Handle the user changing the status from the action popup while the options
 // page is open.
-chrome.storage.onChanged.addListener(function(changes, namespace) {
+browser.storage.onChanged.addListener(function(changes, namespace) {
   if (namespace === 'sync' && changes.on) {
     setStatus(changes.on.newValue, false);
   }
@@ -245,7 +252,7 @@ document.querySelector('#export').addEventListener('click', function() {
   var data = window.btoa(JSON.stringify({rules: rules}));
   var url = 'data:application/json;base64,' + data;
 
-  chrome.downloads.download({
+  browser.downloads.download({
     url: url,
     filename: 'pawblock-rules.json',
     saveAs: true
@@ -288,12 +295,12 @@ document.querySelector('#filepicker').addEventListener('change', function(e) {
 
 document.querySelector('#hard-block').addEventListener('change', function() {
   document.querySelector('#seconds').disabled = true;
-  chrome.storage.sync.set({blockType: 'hard'});
+  browser.storage.sync.set({blockType: 'hard'});
 });
 
 document.querySelector('#soft-block').addEventListener('change', function() {
   document.querySelector('#seconds').disabled = false;
-  chrome.storage.sync.set({blockType: 'soft'});
+  browser.storage.sync.set({blockType: 'soft'});
 });
 
 document.querySelector('#seconds').addEventListener('input', function(e) {
@@ -311,5 +318,5 @@ document.querySelector('#seconds').addEventListener('input', function(e) {
     }
   }
 
-  chrome.storage.sync.set({softBlockDelay: seconds});
+  browser.storage.sync.set({softBlockDelay: seconds});
 });

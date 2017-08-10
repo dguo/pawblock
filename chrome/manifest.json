@@ -3,37 +3,38 @@
   "name": "PawBlock",
   "version": "0.2.0",
   "description": "Block websites to prevent procrastination and execessive web surfing.",
-
+  "applications": {
+    "gecko": {
+      "id": "pawblock@dannyguo.com"
+    }
+  },
   "icons": {
+    "16": "images/icon-16-on.png",
+    "32": "images/icon-32-on.png",
+    "48": "images/icon-48-on.png",
+    "128": "images/icon-128-on.png"
+  },
+  "browser_action": {
+    "default_icon": {
       "16": "images/icon-16-on.png",
       "32": "images/icon-32-on.png",
       "48": "images/icon-48-on.png",
       "128": "images/icon-128-on.png"
+    },
+    "default_title": "PawBlock",
+    "default_popup": "popup.html"
   },
-
-  "browser_action": {
-      "default_icon": {
-          "16": "images/icon-16-on.png",
-          "32": "images/icon-32-on.png",
-          "48": "images/icon-48-on.png",
-          "128": "images/icon-128-on.png"
-      },
-      "default_title": "PawBlock",
-      "default_popup": "popup.html"
-  },
-
   "background": {
-      "scripts": ["blockCheck.js"],
-      "persistent": false
+    "scripts": ["blockCheck.js"],
+    "persistent": false
   },
-
   "options_page": "options.html",
   "options_ui": {
     "page": "options.html",
+    "browser_style": false,
     "chrome_style": false,
     "open_in_tab": true
   },
-
   "permissions": [
     "https://*/*",
     "http://*/*",
@@ -42,8 +43,7 @@
     "tabs",
     "webNavigation"
   ],
-
   "web_accessible_resources": [
-      "block.html"
+    "block.html"
   ]
 }

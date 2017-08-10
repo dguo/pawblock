@@ -7,7 +7,7 @@
         "browser": true
     },
     "globals": {
-        "chrome": false
+        "browser": false
     },
     "rules": {
         "no-console": "off"

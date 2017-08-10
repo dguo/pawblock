@@ -1,3 +1,10 @@
+if (
+  typeof window.browser === 'undefined' &&
+  typeof window.chrome === 'object'
+) {
+  window.browser = window.chrome;
+}
+
 var backButton = document.querySelector('#back-button');
 var happyImage = document.querySelector('#happy-image');
 var sadImage = document.querySelector('#sad-image');
@@ -64,8 +71,12 @@ backButton.addEventListener('click', function() {
   /* Close the tab if there's nothing to go back to. Use a timeout because
      there's no way to know if there is backwards history for the tab.
      Checking the history length doesn't work because forward history is
-     included in the count. Without a timeout, the tab will always close. */
-  setTimeout(window.close, 500);
+     included in the count. Without a timeout, the tab will always close.
+     Don't use window.close because Firefox doesn't allow a script to close a
+     window it didn't open. */
+  setTimeout(function() {
+    browser.runtime.sendMessage({closeTab: true});
+  }, 500);
 });
 
 backButton.addEventListener('mouseenter', function() {
@@ -89,34 +100,33 @@ document
       return;
     }
 
-    chrome.tabs.getCurrent(function(tab) {
-      if (tab && tab.id) {
-        chrome.storage.sync.set({allowedTabId: tab.id}, function() {
-          var error = chrome.runtime.lastError;
-          if (error || !targetUrl) {
-            document.querySelector('#message').style.display = 'block';
-            return;
-          }
+    if (!targetUrl) {
+      document.querySelector('#message').style.display = 'block';
+      return;
+    }
 
-          // Use replace so that the block page isn't in the tab's history
-          window.location.replace(targetUrl);
-        });
+    browser.runtime.sendMessage(null, {allow: true}, null, function(response) {
+      if (response.error) {
+        document.querySelector('#message').style.display = 'block';
+      } else {
+        // Use replace so that the block page isn't in the tab's history
+        window.location.replace(targetUrl);
       }
     });
   });
 
 document.querySelector('#options-link').onclick = function() {
-  if (chrome.runtime.openOptionsPage) {
+  if (browser.runtime.openOptionsPage) {
     // New way to open options pages, if supported (Chrome 42+).
-    chrome.runtime.openOptionsPage();
+    browser.runtime.openOptionsPage();
   } else {
-    window.open(chrome.runtime.getURL('options.html'));
+    window.open(browser.runtime.getURL('options.html'));
   }
 };
 
 document.querySelector('#copyright').textContent = new Date().getFullYear();
 
-chrome.storage.sync.get(
+browser.storage.sync.get(
   {
     blockType: 'soft',
     softBlockDelay: 5

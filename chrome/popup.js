@@ -1,3 +1,10 @@
+if (
+  typeof window.browser === 'undefined' &&
+  typeof window.chrome === 'object'
+) {
+  window.browser = window.chrome;
+}
+
 var onButton = document.querySelector('#on-button');
 var offButton = document.querySelector('#off-button');
 
@@ -11,13 +18,13 @@ function setStatus(on, saveToStorage) {
   }
 
   if (saveToStorage) {
-    chrome.storage.sync.set({on: on}, function() {
-      var error = chrome.runtime.lastError;
+    browser.storage.sync.set({on: on}, function() {
+      var error = browser.runtime.lastError;
       if (error) {
         console.error('Failed to set the status:', error.message);
       } else {
         var status = on ? 'on' : 'off';
-        chrome.browserAction.setIcon({
+        browser.browserAction.setIcon({
           path: {
             '16': 'images/icon-16-' + status + '.png',
             '32': 'images/icon-32-' + status + '.png',
@@ -31,8 +38,8 @@ function setStatus(on, saveToStorage) {
 }
 
 function restoreSettings() {
-  chrome.storage.sync.get({on: true}, function(items) {
-    var error = chrome.runtime.lastError;
+  browser.storage.sync.get({on: true}, function(items) {
+    var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to retrieve settings:', error.message);
     } else {
@@ -52,10 +59,10 @@ offButton.addEventListener('click', function() {
 });
 
 document.querySelector('#options-link').addEventListener('click', function() {
-  if (chrome.runtime.openOptionsPage) {
+  if (browser.runtime.openOptionsPage) {
     // New way to open options pages, if supported (Chrome 42+).
-    chrome.runtime.openOptionsPage();
+    browser.runtime.openOptionsPage();
   } else {
-    window.open(chrome.runtime.getURL('options.html'));
+    window.open(browser.runtime.getURL('options.html'));
   }
 });

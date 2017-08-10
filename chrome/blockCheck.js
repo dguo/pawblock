@@ -1,7 +1,14 @@
+if (
+  typeof window.browser === 'undefined' &&
+  typeof window.chrome === 'object'
+) {
+  window.browser = window.chrome;
+}
+
 // Disable the browser action icon if PawBlock is turned off
-chrome.storage.sync.get({on: true}, function(items) {
+browser.storage.sync.get({on: true}, function(items) {
   if (!items.on) {
-    chrome.browserAction.setIcon({
+    browser.browserAction.setIcon({
       path: {
         '16': 'images/icon-16-off.png',
         '32': 'images/icon-32-off.png',
@@ -12,7 +19,7 @@ chrome.storage.sync.get({on: true}, function(items) {
   }
 });
 
-chrome.webNavigation.onCommitted.addListener(function(details) {
+browser.webNavigation.onCommitted.addListener(function(details) {
   // Avoid iFrame navigations
   if (details.frameId !== 0) {
     return;
@@ -24,8 +31,8 @@ chrome.webNavigation.onCommitted.addListener(function(details) {
     on: true
   };
 
-  chrome.storage.sync.get(storageQuery, function(items) {
-    var error = chrome.runtime.lastError;
+  browser.storage.sync.get(storageQuery, function(items) {
+    var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to get data from storage:', error);
       return;
@@ -36,7 +43,7 @@ chrome.webNavigation.onCommitted.addListener(function(details) {
     }
 
     if (items.allowedTabId === details.tabId) {
-      chrome.storage.sync.remove('allowedTabId');
+      browser.storage.sync.remove('allowedTabId');
       return;
     }
 
@@ -66,7 +73,7 @@ chrome.webNavigation.onCommitted.addListener(function(details) {
 
         if (i === rulePath.length) {
           var blockedUrl = encodeURIComponent(details.url);
-          var blockPageUrl = chrome.runtime.getURL(
+          var blockPageUrl = browser.runtime.getURL(
             'block.html?target=' + blockedUrl
           );
 
@@ -82,12 +89,12 @@ chrome.webNavigation.onCommitted.addListener(function(details) {
              when there are multiple newly blocked pages in the history. */
 
           // Try to avoid flashing the website before the redirect occurs
-          chrome.tabs.insertCSS(details.tabId, {
+          browser.tabs.insertCSS(details.tabId, {
             code: '* { display: none !important; }',
             runAt: 'document_start'
           });
 
-          chrome.tabs.executeScript(details.tabId, {
+          browser.tabs.executeScript(details.tabId, {
             code: 'window.location.replace("' + blockPageUrl + '");',
             runAt: 'document_start'
           });
@@ -95,4 +102,23 @@ chrome.webNavigation.onCommitted.addListener(function(details) {
       }
     });
   });
+});
+
+browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  if (message.closeTab && sender.tab && sender.tab.id) {
+    browser.tabs.remove(sender.tab.id);
+    return;
+  }
+
+  if (sender.tab && sender.tab.id) {
+    browser.storage.sync.set({allowedTabId: sender.tab.id}, function() {
+      var error = browser.runtime.lastError;
+      sendResponse({error: Boolean(error)});
+    });
+
+    // Allows for an async response
+    return true;
+  } else {
+    sendResponse({error: true});
+  }
 });

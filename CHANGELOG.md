@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Firefox support
+
 ### Changed
 - Remove the instructions panel on the options page in favor of inline
   instructions
