@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
   "name": "PawBlock",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Block websites to prevent procrastination and execessive web surfing.",
   "applications": {
     "gecko": {
-      "id": "pawblock@dannyguo.com"
+      "id": "@pawblock"
     }
   },
   "icons": {
