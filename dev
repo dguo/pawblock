@@ -48,8 +48,10 @@ def release(args, remaining):
             for file in files:
                 if file != '.DS_Store':
                     handle.write(os.path.join(root, file))
-    print('Upload the new zip file in the Chrome Web Store developer dashboard')
+    print('Upload the new zip file to the Chrome Web Store:')
     print('https://chrome.google.com/webstore/developer/edit/jngmmiaolbliepfphdnelgfcclpnkoja')
+    print('And to Mozilla Add-ons:')
+    print('https://addons.mozilla.org/en-US/developers/addon/pawblock/edit')
 parser_release = subparsers.add_parser('release', help='Help release an update')
 parser_release.set_defaults(func=release)
 
