@@ -14,3 +14,6 @@ jobs:
       - run:
           name: Lint the code
           command: npx eslint **/*.js
+      - run:
+          name: Run tests
+          command: npx jest

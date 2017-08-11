@@ -55,6 +55,13 @@ def release(args, remaining):
 parser_release = subparsers.add_parser('release', help='Help release an update')
 parser_release.set_defaults(func=release)
 
+def test(args, remaining):
+    rc = call(DOCKER_RUN + ['npx', 'jest'])
+    exit(rc)
+parser_test = subparsers.add_parser('test', help='test the code')
+parser_test.set_defaults(func=test)
+
+
 if len(sys.argv) > 1:
     args, remaining = parser.parse_known_args()
     args.func(args, remaining)
