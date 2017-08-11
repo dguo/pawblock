@@ -249,8 +249,11 @@ document.querySelectorAll('input').forEach(function(input) {
 document.querySelector('#copyright').textContent = new Date().getFullYear();
 
 document.querySelector('#export').addEventListener('click', function() {
-  var data = window.btoa(JSON.stringify({rules: rules}));
-  var url = 'data:application/json;base64,' + data;
+  var data = new Blob([JSON.stringify({rules: rules})], {
+    type: 'text/json;charset=utf-8'
+  });
+
+  var url = URL.createObjectURL(data);
 
   browser.downloads.download({
     url: url,
