@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=yes">
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-        <link rel="icon" href="chrome/images/icon-128-on.png" type="image/png">
+        <link rel="icon" href="extension/images/icon-128-on.png" type="image/png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -48,6 +48,24 @@
 
             .button {
                 min-width: 170px;
+            }
+
+            #chrome {
+                background-color: #1384c8;
+                color: #EAEFF2;
+            }
+
+            #chrome:hover {
+                background-color: #1075b2;
+            }
+
+            #firefox {
+                background-color: #E66000;
+                color: #EAEFF2;
+            }
+
+            #firefox:hover {
+                background-color: #CE5600;
             }
 
             #faq {
@@ -120,7 +138,7 @@
                 </h4>
                 <p>
                     <a href="https://chrome.google.com/webstore/detail/pawblock/jngmmiaolbliepfphdnelgfcclpnkoja"
-                        class="button is-info is-large">
+                        id="chrome" class="button is-large">
                         <span class="icon">
                             <i class="fa fa-chrome"></i>
                         </span>
@@ -130,7 +148,7 @@
                 <br>
                 <p>
                     <a href="https://addons.mozilla.org/en-US/firefox/addon/pawblock/"
-                        class="button is-danger is-large">
+                        id="firefox" class="button is-large">
                         <span class="icon">
                             <i class="fa fa-firefox"></i>
                         </span>
@@ -208,10 +226,11 @@
 
             <article class="message is-info">
                 <div class="message-header">
-                    <p>Is PawBlock only available for Chrome?</p>
+                    <p>Is PawBlock only available for Chrome and Firefox?</p>
                 </div>
                 <div class="message-body">
-                   Yes, but I plan to port it to other browsers eventually.
+                    Yes, but I plan to submit it to Opera since porting it
+                    should be minimal work.
                 </div>
             </article>
 
@@ -256,7 +275,7 @@
                 <a href="https://dannyguo.com">Danny Guo</a>
             </p>
 
-            <img style="max-height: 200px;" src="chrome/images/cat.jpg" alt="cat">
+            <img style="max-height: 200px;" src="extension/images/cat.jpg" alt="cat">
         </footer>
     </body>
 </html>

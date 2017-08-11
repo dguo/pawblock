@@ -6,11 +6,13 @@ of animal pictures. Check out the [landing page](https://dannyguo.com/pawblock)
 for screenshots and a FAQ.
 
 ## Installation
-Install from the [Chrome Web
-Store](https://chrome.google.com/webstore/detail/pawblock/jngmmiaolbliepfphdnelgfcclpnkoja).
-I do plan to port it to other browsers.
+* [Chrome](https://chrome.google.com/webstore/detail/pawblock/jngmmiaolbliepfphdnelgfcclpnkoja)
+* [Firefox](https://addons.mozilla.org/en-US/developers/addon/pawblock/)
 
 ## Alternatives
 * [StayFocusd](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji)
 * [WasteNoTime](http://www.bumblebeesystems.com/wastenotime/)
 * [Block Site](https://chrome.google.com/webstore/detail/block-site/eiimnmioipafcokbfikbljfdeojpcgbh)
+
+## License
+[MIT](https://github.com/dguo/pawblock/blob/master/LICENSE)
