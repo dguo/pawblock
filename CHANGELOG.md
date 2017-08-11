@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.3.1] - 2017-08-10
+### Fixed
+- Fix a typo in the manifest description
+
 ## [0.3.0] - 2017-08-10
 ### Added
 - Firefox support
@@ -37,7 +41,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - Initial implementation
 
-[Unreleased]: https://github.com/dguo/pawblock/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/dguo/pawblock/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/dguo/pawblock/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/dguo/pawblock/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dguo/pawblock/compare/v0.1.0...v0.2.0
 [landing page]: https://dannyguo.com/pawblock
