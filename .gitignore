@@ -3,3 +3,5 @@
 *.swp
 *.zip
 node_modules
+extension/fonts/[fF]ont[aA]wesome*
+extension/styles/*min*

@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import os
 from subprocess import call
 import sys
+import urllib.request
 import zipfile
 
 parser = argparse.ArgumentParser(prog='./dev')
@@ -11,6 +12,37 @@ subparsers = parser.add_subparsers(metavar='<command>', title='commands')
 
 DOCKER_RUN = ['docker', 'run', '-it', '--rm', '-v',
               os.getcwd() + ':/src:cached', '-w=/src', 'node:8.2.1-alpine']
+
+def get_static_assets():
+    bulma_url = 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3'
+    fa_url = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0'
+
+    urllib.request.urlretrieve(
+        '{}/css/bulma.min.css'.format(bulma_url),
+        'extension/styles/bulma.min.css'
+    )
+
+    urllib.request.urlretrieve(
+        '{}/css/font-awesome.min.css'.format(fa_url),
+        'extension/styles/font-awesome.min.css'
+    )
+
+    font_files = ['FontAwesome.otf', 'fontawesome-webfont.eot',
+                  'fontawesome-webfont.svg', 'fontawesome-webfont.ttf',
+                  'fontawesome-webfont.woff', 'fontawesome-webfont.woff2']
+
+    for font_file in font_files:
+        urllib.request.urlretrieve(
+            '{}/fonts/{}'.format(fa_url, font_file),
+            'extension/fonts/{}'.format(font_file)
+        )
+
+def start(args, remaining):
+    call(DOCKER_RUN + ['npm', 'install'])
+    get_static_assets()
+parser_start = subparsers.add_parser('start',
+    help='Initialize the development environment')
+parser_start.set_defaults(func=start)
 
 def sh(args, remaining):
     call(DOCKER_RUN + ['sh'])
@@ -60,7 +92,6 @@ def test(args, remaining):
     exit(rc)
 parser_test = subparsers.add_parser('test', help='test the code')
 parser_test.set_defaults(func=test)
-
 
 if len(sys.argv) > 1:
     args, remaining = parser.parse_known_args()
