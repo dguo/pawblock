@@ -3,6 +3,7 @@
 import argparse
 import os
 from subprocess import call
+import re
 import sys
 import urllib.request
 import zipfile
@@ -13,25 +14,28 @@ subparsers = parser.add_subparsers(metavar='<command>', title='commands')
 DOCKER_RUN = ['docker', 'run', '-it', '--rm', '-v',
               os.getcwd() + ':/src:cached', '-w=/src', 'node:8.2.1-alpine']
 
+BULMA_PATH = 'extension/styles/bulma.min.css'
+FA_PATH = 'extension/styles/font-awesome.min.css'
+
+FONT_FILES = ['FontAwesome.otf', 'fontawesome-webfont.eot',
+              'fontawesome-webfont.svg', 'fontawesome-webfont.ttf',
+              'fontawesome-webfont.woff', 'fontawesome-webfont.woff2']
+
 def get_static_assets():
     bulma_url = 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3'
     fa_url = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0'
 
     urllib.request.urlretrieve(
         '{}/css/bulma.min.css'.format(bulma_url),
-        'extension/styles/bulma.min.css'
+        BULMA_PATH
     )
 
     urllib.request.urlretrieve(
         '{}/css/font-awesome.min.css'.format(fa_url),
-        'extension/styles/font-awesome.min.css'
+        FA_PATH
     )
 
-    font_files = ['FontAwesome.otf', 'fontawesome-webfont.eot',
-                  'fontawesome-webfont.svg', 'fontawesome-webfont.ttf',
-                  'fontawesome-webfont.woff', 'fontawesome-webfont.woff2']
-
-    for font_file in font_files:
+    for font_file in FONT_FILES:
         urllib.request.urlretrieve(
             '{}/fonts/{}'.format(fa_url, font_file),
             'extension/fonts/{}'.format(font_file)
@@ -68,22 +72,44 @@ def lint(args, remaining):
 parser_lint = subparsers.add_parser('lint', help='Lint the code with ESLint')
 parser_lint.set_defaults(func=lint)
 
+def check_file(path):
+    if not os.path.isfile(path):
+        print('Missing file: {}'.format(path))
+        print('Did you run dev start?')
+        exit(1)
+
 def release(args, remaining):
-    if raw_input('Did you update the manifest version [y/n]? ').lower() != 'y':
-        exit(1)
-    if raw_input('Did you update the changelog [y/n]? ').lower() != 'y':
-        exit(1)
-    with zipfile.ZipFile('pawblock.zip', 'w',
-                         zipfile.ZIP_DEFLATED) as handle:
+    check_file(BULMA_PATH)
+    check_file(FA_PATH)
+    for font_file in FONT_FILES:
+        check_file('extension/fonts/{}'.format(font_file))
+
+    try:
+        new_version = input('What is the new version? ')
+        if not re.match(r'\d+\.\d+\.\d+', new_version):
+            print('Bad version format (should be x.y.z)')
+            exit(1)
+        if input('Did you update the manifest version [y/n]? ').lower() != 'y':
+            exit(1)
+        if input('Did you update the changelog [y/n]? ').lower() != 'y':
+            exit(1)
+    except (KeyboardInterrupt, EOFError):
+        exit(0)
+
+    new_zip = 'pawblock-{}.zip'.format(new_version)
+    with zipfile.ZipFile(new_zip, 'w', zipfile.ZIP_DEFLATED) as handle:
         os.chdir('extension')
         for root, dirs, files in os.walk('.'):
             for file in files:
-                if file != '.DS_Store':
+                if file != '.DS_Store' and file != 'README.md':
                     handle.write(os.path.join(root, file))
-    print('Upload the new zip file to the Chrome Web Store:')
+
+    print('\nUpload {} to the Chrome Web Store:'.format(new_zip))
     print('https://chrome.google.com/webstore/developer/edit/jngmmiaolbliepfphdnelgfcclpnkoja')
-    print('And to Mozilla Add-ons:')
+    print('\nAnd to Mozilla Add-ons:')
     print('https://addons.mozilla.org/en-US/developers/addon/pawblock/edit')
+    print('\nAnd to GitHub:')
+    print('https://github.com/dguo/pawblock/releases')
 parser_release = subparsers.add_parser('release', help='Help release an update')
 parser_release.set_defaults(func=release)
 
