@@ -1,0 +1,25 @@
+html {
+    font-family: sans-serif;
+}
+
+body {
+    /* Stop the popup from being too narrow on Firefox */
+    min-width: 300px;
+}
+
+.hero {
+    margin-bottom: 1em;
+}
+
+h1 {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+#buttons {
+    justify-content: center;
+}
+
+#on-button, #off-button {
+    min-width: 55px;
+}

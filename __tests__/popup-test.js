@@ -13,7 +13,7 @@ test('action popup', () => {
     }
   };
 
-  require('../extension/popup');
+  require('../extension/scripts/popup.js');
 
   document.dispatchEvent(new Event('DOMContentLoaded'));
 

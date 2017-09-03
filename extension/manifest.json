@@ -25,7 +25,7 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["blockCheck.js"],
+    "scripts": ["scripts/blockCheck.js"],
     "persistent": false
   },
   "options_page": "options.html",

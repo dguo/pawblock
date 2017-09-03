@@ -1,0 +1,33 @@
+html {
+    font-family: sans-serif;
+}
+
+#header {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.hero, h2, #images, #buttons, #options, #message {
+    margin-bottom: 2em;
+}
+
+.message {
+    max-width: 500px;
+    display: inline-flex;
+}
+
+#button-group {
+    display: inline-flex;
+}
+
+.button {
+    min-width: 150px;
+}
+
+#message, #happy-image {
+    display: none;
+}
+
+#sad-image, #happy-image {
+    max-height: 50vh;
+}

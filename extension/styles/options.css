@@ -1,0 +1,43 @@
+html {
+    font-family: sans-serif;
+}
+
+footer {
+    margin-top: 2em;
+}
+
+#domain-error, #path-error {
+    margin-top: 0.5em;
+    padding: 3px 5px;
+    display: none;
+}
+
+#generic-error {
+    display: none;
+}
+
+#instructions-list {
+    margin-top: 0;
+    margin-left: 1em;
+}
+
+#header {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.columns {
+    margin-top: 0.5em;
+}
+
+#on-button, #off-button {
+    min-width: 55px;
+}
+
+#filepicker {
+    display: none;
+}
+
+#seconds {
+    max-width: 70px;
+}
