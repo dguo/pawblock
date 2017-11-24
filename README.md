@@ -7,7 +7,7 @@ for screenshots and a FAQ.
 
 ## Installation
 * [Chrome](https://chrome.google.com/webstore/detail/pawblock/jngmmiaolbliepfphdnelgfcclpnkoja)
-* [Firefox](https://addons.mozilla.org/en-US/developers/addon/pawblock/)
+* [Firefox](https://addons.mozilla.org/en-US/firefox/addon/pawblock/)
 
 ## Alternatives
 * [StayFocusd](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji)
