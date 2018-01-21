@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(prog='./dev')
 subparsers = parser.add_subparsers(metavar='<command>', title='commands')
 
 DOCKER_RUN = ['docker', 'run', '-it', '--rm', '-v',
-              os.getcwd() + ':/src:cached', '-w=/src', 'node:8.2.1-alpine']
+              os.getcwd() + ':/src:cached', '-w=/src', 'node:8.9.3-alpine']
 
 BULMA_PATH = 'extension/styles/bulma.min.css'
 FA_PATH = 'extension/styles/font-awesome.min.css'
