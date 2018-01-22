@@ -47,37 +47,29 @@ browser.webNavigation.onCommitted.addListener(function(details) {
       return;
     }
 
-    var slashes = /^\/|\/$/g;
     var targetUrl = new URL(details.url);
     var targetDomain = targetUrl.hostname.replace(/^www\./, '');
-    var targetPath = targetUrl.pathname.replace(slashes, '').split('/');
 
-    items.rules.forEach(function(rule) {
-      if (targetDomain === rule.domain) {
-        var rulePath = rule.path.replace(slashes, '').split('/');
+    for (const rule of items.rules) {
+      var block = false;
 
-        /* Only block the site if the target path includes all of
-           the rule path, which means that each segment matches up.
-
-           So with a rule of /foo/bar/baz, allow /foo/bar,
-           allow /foo/bar/bazs, block /foo/bar/baz, and block
-           /foo/bar/baz/qux. */
-        var i = 0;
-        while (
-          i < targetPath.length &&
-          i < rulePath.length &&
-          (rulePath[i] === '' || targetPath[i] === rulePath[i])
-        ) {
-          i++;
+      var domainRegex = new RegExp(rule.domain);
+      if (domainRegex.test(targetDomain)) {
+        if (!rule.path) {
+          block = true;
+        } else {
+          var pathRegex = new RegExp(rule.path);
+          block = pathRegex.test(targetUrl.pathname);
         }
+      }
 
-        if (i === rulePath.length) {
-          var blockedUrl = encodeURIComponent(details.url);
-          var blockPageUrl = browser.runtime.getURL(
-            'block.html?target=' + blockedUrl
-          );
+      if (block) {
+        var blockedUrl = encodeURIComponent(details.url);
+        var blockPageUrl = browser.runtime.getURL(
+          'block.html?target=' + blockedUrl
+        );
 
-          /* Deal with the edge case of the user adding a rule or turning
+        /* Deal with the edge case of the user adding a rule or turning
              PawBlock on but then trying to navigate backwards in history to
              a now blocked page. The problem with just updating the tab url
              is that it creates an infinite loop because navgiating to that
@@ -88,19 +80,20 @@ browser.webNavigation.onCommitted.addListener(function(details) {
              block in the tab's browser history. This solution also works
              when there are multiple newly blocked pages in the history. */
 
-          // Try to avoid flashing the website before the redirect occurs
-          browser.tabs.insertCSS(details.tabId, {
-            code: '* { display: none !important; }',
-            runAt: 'document_start'
-          });
+        // Try to avoid flashing the website before the redirect occurs
+        browser.tabs.insertCSS(details.tabId, {
+          code: '* { display: none !important; }',
+          runAt: 'document_start'
+        });
 
-          browser.tabs.executeScript(details.tabId, {
-            code: 'window.location.replace("' + blockPageUrl + '");',
-            runAt: 'document_start'
-          });
-        }
+        browser.tabs.executeScript(details.tabId, {
+          code: 'window.location.replace("' + blockPageUrl + '");',
+          runAt: 'document_start'
+        });
+
+        break;
       }
-    });
+    }
   });
 });
 
