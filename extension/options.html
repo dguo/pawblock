@@ -126,6 +126,19 @@
                     </div>
                 </div>
 
+                <p id="regex-tip">
+                    Tip: use <code>.*</code> for wild cards. For example, a
+                    rule with <code>.*amazon.com</code> as the website would
+                    block both <a href="https://amazon.com">amazon.com</a> and
+                    <a href="https://smile.amazon.com">smile.amazon.com</a>,
+                    and a rule with <code>espn.com</code> as the website and
+                    <code>/n.*</code> as the path would block
+                    <a href="http://espn.com/nfl">espn.com/nfl</a> but allow
+                    <a href="http://espn.com/mlb">espn.com/mlb</a>. For advanced
+                    flexibility in your rule, write it as a
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">JavaScript regex</a>.
+                </p>
+
                 <table class="table is-bordered">
                     <thead>
                         <tr>
@@ -179,15 +192,6 @@
                                 <span>Delete</span>
                                 <span class="icon is-small">
                                     <i class="fa fa-trash"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a target="_blank"
-                                class="button is-small is-info try-it-button">
-                                <span>Try It</span>
-                                <span class="icon is-small">
-                                    <i class="fa fa-external-link"></i>
                                 </span>
                             </a>
                         </p>

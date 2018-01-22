@@ -41,3 +41,7 @@ footer {
 #seconds {
     max-width: 70px;
 }
+
+#regex-tip {
+    margin-bottom: 25px;
+}

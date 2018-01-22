@@ -53,9 +53,6 @@ function prependRuletoTable(rule) {
   td[0].textContent = rule.domain;
   td[1].textContent = rule.path;
 
-  var href = 'http://' + rule.domain + rule.path;
-  t.content.querySelector('.try-it-button').href = href;
-
   var newRow = document.importNode(t.content, true);
   newRow.querySelector('.delete-button').onclick = deleteRule;
 
