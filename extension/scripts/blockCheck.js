@@ -50,7 +50,7 @@ browser.webNavigation.onCommitted.addListener(function(details) {
     var targetUrl = new URL(details.url);
     var targetDomain = targetUrl.hostname.replace(/^www\./, '');
 
-    for (const rule of items.rules) {
+    for (var rule of items.rules) {
       var block = false;
 
       var domainRegex = new RegExp(rule.domain);

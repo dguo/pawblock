@@ -11,8 +11,8 @@ import zipfile
 parser = argparse.ArgumentParser(prog='./dev')
 subparsers = parser.add_subparsers(metavar='<command>', title='commands')
 
-DOCKER_RUN = ['docker', 'run', '-it', '--rm', '-v',
-              os.getcwd() + ':/src:cached', '-w=/src', 'node:8.9.3-alpine']
+DOCKER_RUN = ['docker', 'run', '--init', '-it', '--rm', '-v',
+              os.getcwd() + ':/src:cached', '-w=/src', 'node:8.11.1-alpine']
 
 BULMA_PATH = 'extension/styles/bulma.min.css'
 FA_PATH = 'extension/styles/font-awesome.min.css'
@@ -42,7 +42,7 @@ def get_static_assets():
         )
 
 def start(args, remaining):
-    call(DOCKER_RUN + ['npm', 'install'])
+    call(DOCKER_RUN + ['yarn', 'install'])
     get_static_assets()
 parser_start = subparsers.add_parser('start',
     help='Initialize the development environment')
@@ -53,13 +53,13 @@ def sh(args, remaining):
 parser_sh = subparsers.add_parser('sh', help='Bring up a shell')
 parser_sh.set_defaults(func=sh)
 
-def npm(args, remaining):
-    call(DOCKER_RUN + ['npm'] + remaining or [])
-parser_npm = subparsers.add_parser('npm', help='Run a npm command')
-parser_npm.set_defaults(func=npm)
+def yarn(args, remaining):
+    call(DOCKER_RUN + ['yarn'] + remaining or [])
+parser_yarn = subparsers.add_parser('yarn', help='Run a yarn command')
+parser_yarn.set_defaults(func=yarn)
 
 def format(args, remaining):
-    rc = call(DOCKER_RUN + ['npx', 'prettier', '--single-quote',
+    rc = call(DOCKER_RUN + ['yarn', 'prettier', '--single-quote',
                             '--no-bracket-spacing', '--write', '**/*.js'])
     exit(rc)
 parser_format = subparsers.add_parser('format',
@@ -67,7 +67,7 @@ parser_format = subparsers.add_parser('format',
 parser_format.set_defaults(func=format)
 
 def lint(args, remaining):
-    rc = call(DOCKER_RUN + ['npx', 'eslint', '**/*.js'])
+    rc = call(DOCKER_RUN + ['yarn', 'eslint', '**/*.js'])
     exit(rc)
 parser_lint = subparsers.add_parser('lint', help='Lint the code with ESLint')
 parser_lint.set_defaults(func=lint)
@@ -114,7 +114,7 @@ parser_release = subparsers.add_parser('release', help='Help release an update')
 parser_release.set_defaults(func=release)
 
 def test(args, remaining):
-    rc = call(DOCKER_RUN + ['npx', 'jest'])
+    rc = call(DOCKER_RUN + ['yarn', 'jest'])
     exit(rc)
 parser_test = subparsers.add_parser('test', help='test the code')
 parser_test.set_defaults(func=test)
