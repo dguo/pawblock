@@ -3,6 +3,7 @@
 *.swo
 *.swp
 *.zip
-node_modules
+node_modules/
 extension/fonts/[fF]ont[aA]wesome*
 extension/styles/*min*
+web-ext-artifacts/

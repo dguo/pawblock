@@ -17,3 +17,6 @@ jobs:
       - run:
           name: Run tests
           command: yarn jest
+      - run:
+          name: Run web-ext
+          command: yarn run web-ext lint && yarn run web-ext build

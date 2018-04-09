@@ -16,10 +16,14 @@
     "url": "https://github.com/dguo/pawblock/issues"
   },
   "homepage": "https://dannyguo.com/pawblock",
-  "dependencies": {
-    "eslint": "4.19.1",
-    "eslint-config-prettier": "2.9.0",
-    "jest": "22.4.3",
-    "prettier": "1.11.1"
+  "scripts": {
+    "release": "web-ext lint && web-ext build --overwrite-dest"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "jest": "^22.4.3",
+    "prettier": "^1.11.1",
+    "web-ext": "^2.6.0"
   }
 }
