@@ -16,10 +16,26 @@ h1 {
     margin-bottom: 0.2em;
 }
 
-#buttons {
+#status-buttons, #confirm-buttons {
     justify-content: center;
+}
+
+#confirm-buttons {
+    margin-top: 15px;
+}
+
+.button {
+    min-width: 100px;
 }
 
 #on-button, #off-button {
     min-width: 55px;
+}
+
+#are-you-sure {
+    display: none;
+}
+
+img {
+    max-width: 150px;
 }

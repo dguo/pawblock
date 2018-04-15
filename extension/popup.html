@@ -19,13 +19,32 @@
             </h1>
         </section>
 
-        <div id="buttons" class="field has-addons">
+        <div id="status-buttons" class="buttons field has-addons">
             <p class="control">
                 <a id="on-button" class="button">On</a>
             </p>
             <p class="control">
                 <a id="off-button" class="button">Off</a>
             </p>
+        </div>
+
+        <div id="are-you-sure">
+            <p>Are you <b><i>sure</i></b> you want to turn it off?</p>
+
+            <div id="confirm-buttons" class="buttons field is-grouped">
+                <p class="control">
+                    <a id="cancel-button" class="button is-success">
+                        Never mind!
+                    </a>
+                </p>
+                <p class="control">
+                    <a id="confirm-button" class="button is-danger">
+                        Yes
+                    </a>
+                </p>
+            </div>
+
+            <img id="animal" src="images/sad-pug.svg">
         </div>
 
         <a id="options-link">Edit your options</a>
