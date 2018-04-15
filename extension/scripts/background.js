@@ -5,17 +5,25 @@ if (
   window.browser = window.chrome;
 }
 
+let reenableTimeoutId = null;
+
+function changeIcon(on) {
+  const status = on ? 'on' : 'off';
+
+  browser.browserAction.setIcon({
+    path: {
+      '16': `images/icon-16-${status}.png`,
+      '32': `images/icon-32-${status}.png`,
+      '48': `images/icon-48-${status}.png`,
+      '128': `images/icon-128-${status}.png`
+    }
+  });
+}
+
 // Disable the browser action icon if PawBlock is turned off
 browser.storage.sync.get({on: true}, function(items) {
   if (!items.on) {
-    browser.browserAction.setIcon({
-      path: {
-        '16': 'images/icon-16-off.png',
-        '32': 'images/icon-32-off.png',
-        '48': 'images/icon-48-off.png',
-        '128': 'images/icon-128-off.png'
-      }
-    });
+    changeIcon(false);
   }
 });
 
@@ -113,5 +121,36 @@ browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     return true;
   } else {
     sendResponse({error: true});
+  }
+});
+
+browser.storage.onChanged.addListener(changes => {
+  if (
+    changes.reenableMinutes &&
+    !changes.reenableMinutes.newValue &&
+    reenableTimeoutId
+  ) {
+    clearTimeout(reenableTimeoutId);
+  }
+
+  if (!changes.on) {
+    return;
+  }
+
+  changeIcon(changes.on.newValue);
+
+  if (changes.on.newValue) {
+    if (reenableTimeoutId) {
+      clearTimeout(reenableTimeoutId);
+    }
+  } else {
+    browser.storage.sync.get('reenableMinutes', items => {
+      if (items.reenableMinutes) {
+        reenableTimeoutId = setTimeout(() => {
+          browser.storage.sync.set({on: true});
+          reenableTimeoutId = null;
+        }, items.reenableMinutes * 60 * 1000);
+      }
+    });
   }
 });

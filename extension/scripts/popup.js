@@ -29,16 +29,6 @@ function setStatus(on, saveToStorage) {
       var error = browser.runtime.lastError;
       if (error) {
         console.error('Failed to set the status:', error.message);
-      } else {
-        const status = on ? 'on' : 'off';
-        browser.browserAction.setIcon({
-          path: {
-            '16': 'images/icon-16-' + status + '.png',
-            '32': 'images/icon-32-' + status + '.png',
-            '48': 'images/icon-48-' + status + '.png',
-            '128': 'images/icon-128-' + status + '.png'
-          }
-        });
       }
     });
   }

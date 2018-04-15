@@ -160,16 +160,6 @@ function setStatus(on, saveToStorage) {
       }
     });
   }
-
-  var status = on ? 'on' : 'off';
-  browser.browserAction.setIcon({
-    path: {
-      '16': 'images/icon-16-' + status + '.png',
-      '32': 'images/icon-32-' + status + '.png',
-      '48': 'images/icon-48-' + status + '.png',
-      '128': 'images/icon-128-' + status + '.png'
-    }
-  });
 }
 
 function restoreSettings() {
@@ -178,7 +168,8 @@ function restoreSettings() {
     rules: [],
     schemaVersion: null,
     blockType: 'soft',
-    softBlockDelay: 5
+    reenableMinutes: null,
+    softBlockDelay: null
   };
 
   browser.storage.sync.get(storageQuery, function(items) {
@@ -196,6 +187,16 @@ function restoreSettings() {
       } else {
         document.querySelector('#hard-block').checked = true;
         document.querySelector('#seconds').disabled = true;
+      }
+
+      if (items.reenableMinutes) {
+        document.querySelector('#re-enable').checked = true;
+        document.querySelector('#re-enable-minutes').value =
+          items.reenableMinutes;
+      } else {
+        document.querySelector('#no-re-enable').checked = true;
+        document.querySelector('#re-enable-minutes').disabled = true;
+        document.querySelector('#re-enable-minutes').value = 5;
       }
 
       rules = items.rules;
@@ -225,8 +226,8 @@ offButton.addEventListener('click', function() {
 
 // Handle the user changing the status from the action popup while the options
 // page is open.
-browser.storage.onChanged.addListener(function(changes, namespace) {
-  if (namespace === 'sync' && changes.on) {
+browser.storage.onChanged.addListener(function(changes) {
+  if (changes.on) {
     setStatus(changes.on.newValue, false);
   }
 });
@@ -320,3 +321,41 @@ document.querySelector('#seconds').addEventListener('input', function(e) {
 
   browser.storage.sync.set({softBlockDelay: seconds});
 });
+
+document.querySelector('#re-enable').addEventListener('change', function() {
+  const reenableMinutes = document.querySelector('#re-enable-minutes');
+  reenableMinutes.disabled = false;
+  let minutes = parseInt(reenableMinutes.value);
+  if (!minutes) {
+    reenableMinutes.value = 5;
+    minutes = 5;
+  }
+  browser.storage.sync.set({reenableMinutes: minutes});
+});
+
+document.querySelector('#no-re-enable').addEventListener('change', function() {
+  document.querySelector('#re-enable-minutes').disabled = true;
+  browser.storage.sync.set({reenableMinutes: null});
+});
+
+document
+  .querySelector('#re-enable-minutes')
+  .addEventListener('input', function(e) {
+    let minutes;
+
+    if (e.target.value) {
+      const cleanValue = e.target.value.replace(/\D/g, '');
+      this.value = cleanValue;
+
+      if (cleanValue) {
+        minutes = parseInt(cleanValue, 10);
+        if (isNaN(minutes)) {
+          minutes = 1;
+        }
+      }
+    }
+
+    if (minutes) {
+      browser.storage.sync.set({reenableMinutes: minutes});
+    }
+  });

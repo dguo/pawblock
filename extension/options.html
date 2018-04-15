@@ -66,7 +66,7 @@
                     </span>
                 </h2>
 
-                <div class="field">
+                <form class="field">
                     <div class="control">
                         <label class="radio">
                             <input id="hard-block" type="radio" name="block-type">
@@ -79,7 +79,7 @@
                             Soft (option to continue after a delay of x seconds)
                         </label>
                     </div>
-                </div>
+                </form>
 
                 <div class="field has-addons">
                     <p class="control">
@@ -93,6 +93,44 @@
                 </div>
 
                 <hr>
+
+                <h2 id="status-title" class="title is-3">
+                    <span class="icon is-medium">
+                        <i class="fa fa-clock-o"></i>
+                    </span>
+                    <span>
+                        Re-Enable Automatically
+                    </span>
+                </h2>
+
+                <form class="field">
+                    <div class="control">
+                        <label class="radio">
+                            <input id="no-re-enable" type="radio" name="block-type">
+                            Do not re-enable
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio">
+                            <input id="re-enable" type="radio" name="block-type">
+                            Automatically turn PawBlock back on x minutes after you turn it off
+                        </label>
+                    </div>
+                </form>
+
+                <div class="field has-addons">
+                    <p class="control">
+                        <input id="re-enable-minutes" class="input" type="text">
+                    </p>
+                    <p class="control">
+                    <a class="button is-static">
+                        minutes (minimum of 1)
+                    </a>
+                    </p>
+                </div>
+
+                <hr>
+
 
                 <div class="level">
                     <div class="level-left">
@@ -148,7 +186,7 @@
                         <tr id="new-rule-row">
                             <td>
                                 <input id="new-domain" class="input is-small"
-                                    autofocus type="text"
+                                    type="text"
                                     placeholder="e.g. facebook.com">
                                 <p id="domain-error" class="help is-danger">
                                     Invalid domain
