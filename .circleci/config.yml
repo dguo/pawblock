@@ -10,13 +10,13 @@ jobs:
           command: yarn install
       - run:
           name: Check the code format
-          command: yarn prettier --single-quote --no-bracket-spacing --list-different **/*.js
+          command: yarn run format:check
       - run:
           name: Lint the code
-          command: yarn eslint **/*.js
+          command: yarn run lint
       - run:
           name: Run tests
-          command: yarn jest
+          command: yarn run test
       - run:
           name: Run web-ext
           command: yarn run web-ext lint && yarn run web-ext build

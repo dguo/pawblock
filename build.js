@@ -1,9 +1,14 @@
+/* eslint-env node */
+
 const fs = require('fs');
 
 const FONT_FILES = [
-  'FontAwesome.otf', 'fontawesome-webfont.eot',
-  'fontawesome-webfont.svg', 'fontawesome-webfont.ttf',
-  'fontawesome-webfont.woff', 'fontawesome-webfont.woff2'
+  'FontAwesome.otf',
+  'fontawesome-webfont.eot',
+  'fontawesome-webfont.svg',
+  'fontawesome-webfont.ttf',
+  'fontawesome-webfont.woff',
+  'fontawesome-webfont.woff2'
 ];
 
 for (const file of FONT_FILES) {

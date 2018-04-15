@@ -5,7 +5,6 @@ import os
 from subprocess import call
 import re
 import sys
-import zipfile
 
 parser = argparse.ArgumentParser(prog='./dev')
 subparsers = parser.add_subparsers(metavar='<command>', title='commands')
@@ -30,15 +29,14 @@ parser_yarn = subparsers.add_parser('yarn', help='Run a yarn command')
 parser_yarn.set_defaults(func=yarn)
 
 def format(args, remaining):
-    rc = call(DOCKER_RUN + ['yarn', 'prettier', '--single-quote',
-                            '--no-bracket-spacing', '--write', '**/*.js'])
+    rc = call(DOCKER_RUN + ['yarn', 'format'])
     exit(rc)
 parser_format = subparsers.add_parser('format',
     help='Format the code with Prettier')
 parser_format.set_defaults(func=format)
 
 def lint(args, remaining):
-    rc = call(DOCKER_RUN + ['yarn', 'eslint', '**/*.js'])
+    rc = call(DOCKER_RUN + ['yarn', 'lint'])
     exit(rc)
 parser_lint = subparsers.add_parser('lint', help='Lint the code with ESLint')
 parser_lint.set_defaults(func=lint)
@@ -56,15 +54,11 @@ def release(args, remaining):
     except (KeyboardInterrupt, EOFError):
         exit(0)
 
-    new_zip = 'pawblock-{}.zip'.format(new_version)
-    with zipfile.ZipFile(new_zip, 'w', zipfile.ZIP_DEFLATED) as handle:
-        os.chdir('extension')
-        for root, dirs, files in os.walk('.'):
-            for file in files:
-                if file != '.DS_Store' and file != 'README.md':
-                    handle.write(os.path.join(root, file))
+    rc = call(DOCKER_RUN + ['yarn', 'release'])
+    if rc:
+        exit(rc)
 
-    print('\nUpload {} to the Chrome Web Store:'.format(new_zip))
+    print('\nUpload the new ZIP to the Chrome Web Store:')
     print('https://chrome.google.com/webstore/developer/edit/jngmmiaolbliepfphdnelgfcclpnkoja')
     print('\nAnd to Mozilla Add-ons:')
     print('https://addons.mozilla.org/en-US/developers/addon/pawblock/edit')
@@ -74,7 +68,7 @@ parser_release = subparsers.add_parser('release', help='Help release an update')
 parser_release.set_defaults(func=release)
 
 def test(args, remaining):
-    rc = call(DOCKER_RUN + ['yarn', 'jest'])
+    rc = call(DOCKER_RUN + ['yarn', 'test'])
     exit(rc)
 parser_test = subparsers.add_parser('test', help='test the code')
 parser_test.set_defaults(func=test)
