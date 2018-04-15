@@ -76,7 +76,7 @@ browser.webNavigation.onCommitted.addListener(function(details) {
              blocked page would trigger the PawBlock block, and clicking
              "Never mind" would cause another navigation attempt to that
              blocked page, and so on. The solution is to allow the navigation
-             to occur but to immediaately replace the page with the PawBlock
+             to occur but to immediately replace the page with the PawBlock
              block in the tab's browser history. This solution also works
              when there are multiple newly blocked pages in the history. */
 
