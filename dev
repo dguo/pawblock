@@ -5,7 +5,6 @@ import os
 from subprocess import call
 import re
 import sys
-import urllib.request
 import zipfile
 
 parser = argparse.ArgumentParser(prog='./dev')
@@ -14,36 +13,8 @@ subparsers = parser.add_subparsers(metavar='<command>', title='commands')
 DOCKER_RUN = ['docker', 'run', '--init', '-it', '--rm', '-v',
               os.getcwd() + ':/src:cached', '-w=/src', 'node:8.11.1-alpine']
 
-BULMA_PATH = 'extension/styles/bulma.min.css'
-FA_PATH = 'extension/styles/font-awesome.min.css'
-
-FONT_FILES = ['FontAwesome.otf', 'fontawesome-webfont.eot',
-              'fontawesome-webfont.svg', 'fontawesome-webfont.ttf',
-              'fontawesome-webfont.woff', 'fontawesome-webfont.woff2']
-
-def get_static_assets():
-    bulma_url = 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3'
-    fa_url = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0'
-
-    urllib.request.urlretrieve(
-        '{}/css/bulma.min.css'.format(bulma_url),
-        BULMA_PATH
-    )
-
-    urllib.request.urlretrieve(
-        '{}/css/font-awesome.min.css'.format(fa_url),
-        FA_PATH
-    )
-
-    for font_file in FONT_FILES:
-        urllib.request.urlretrieve(
-            '{}/fonts/{}'.format(fa_url, font_file),
-            'extension/fonts/{}'.format(font_file)
-        )
-
 def start(args, remaining):
-    call(DOCKER_RUN + ['yarn', 'install'])
-    get_static_assets()
+    call(DOCKER_RUN + ['yarn', 'start'])
 parser_start = subparsers.add_parser('start',
     help='Initialize the development environment')
 parser_start.set_defaults(func=start)
@@ -72,18 +43,7 @@ def lint(args, remaining):
 parser_lint = subparsers.add_parser('lint', help='Lint the code with ESLint')
 parser_lint.set_defaults(func=lint)
 
-def check_file(path):
-    if not os.path.isfile(path):
-        print('Missing file: {}'.format(path))
-        print('Did you run dev start?')
-        exit(1)
-
 def release(args, remaining):
-    check_file(BULMA_PATH)
-    check_file(FA_PATH)
-    for font_file in FONT_FILES:
-        check_file('extension/fonts/{}'.format(font_file))
-
     try:
         new_version = input('What is the new version? ')
         if not re.match(r'\d+\.\d+\.\d+', new_version):

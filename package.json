@@ -4,7 +4,9 @@
   "description": "Development environment for PawBlock",
   "main": "N/A",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node build.js",
+    "release": "web-ext lint && web-ext build --overwrite-dest",
+    "start": "yarn install && yarn build"
   },
   "repository": {
     "type": "git",
@@ -16,8 +18,9 @@
     "url": "https://github.com/dguo/pawblock/issues"
   },
   "homepage": "https://dannyguo.com/pawblock",
-  "scripts": {
-    "release": "web-ext lint && web-ext build --overwrite-dest"
+  "dependencies": {
+    "bulma": "^0.4.3",
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

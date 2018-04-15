@@ -1,1 +1,1 @@
-This directory is populated by the `dev start` command.
+This directory is populated by the `build` command.
