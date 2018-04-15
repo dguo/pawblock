@@ -38,7 +38,7 @@ footer {
     display: none;
 }
 
-#seconds {
+#seconds, #re-enable-minutes {
     max-width: 70px;
 }
 

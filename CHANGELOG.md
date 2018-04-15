@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Option to automatically turn PawBlock back on x minutes after turning
+  it off
+
 ### Changed
 - Delay turning off PawBlock from the toolbar popup
 
