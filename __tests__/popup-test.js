@@ -1,9 +1,13 @@
+const fs = require('fs');
+const path = require('path');
+
 test('action popup', () => {
-  document.body.innerHTML = `
-    <a id="on-button"></a>
-    <a id="off-button"></a>
-    <a id="options-link"></a>
-  `;
+  const popup = fs.readFileSync(
+    path.join(__dirname, '../extension/popup.html'),
+    'utf-8'
+  );
+
+  document.write(popup);
 
   window.browser = {
     storage: {
