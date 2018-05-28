@@ -1,8 +1,8 @@
 # PawBlock [![CircleCI](https://circleci.com/gh/dguo/pawblock/tree/master.svg?style=svg)](https://circleci.com/gh/dguo/pawblock/tree/master)
-[PawBlock](https://www.dannyguo.com/pawblock/) is a [browser
+[PawBlock](https://www.pawblock.dannyguo.com) is a [browser
 extension](https://en.wikipedia.org/wiki/Browser_extension) for beating
 procrastination and excessive web surfing. It blocks websites using the power
-of animal pictures. Check out the [landing page](https://dannyguo.com/pawblock)
+of animal pictures. Check out the [landing page](https://www.pawblock.dannyguo.com)
 for screenshots and a FAQ.
 
 ## Installation
