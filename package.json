@@ -27,28 +27,28 @@
     "font-awesome": "^4.7.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "jest": "^22.4.3",
-    "prettier": "^1.11.1",
-    "web-ext": "^2.6.0"
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "web-ext": "^3.1.1"
   },
   "eslintConfig": {
     "extends": [
-        "eslint:recommended",
-        "prettier"
+      "eslint:recommended",
+      "prettier"
     ],
     "env": {
-        "browser": true
+      "browser": true
     },
     "globals": {
-        "browser": false
+      "browser": false
     },
     "parserOptions": {
-        "ecmaVersion": 6
+      "ecmaVersion": 6
     },
     "rules": {
-        "no-console": "off"
+      "no-console": "off"
     }
   },
   "prettier": {
