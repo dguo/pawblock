@@ -25,7 +25,7 @@ function setStatus(on, saveToStorage) {
   }
 
   if (saveToStorage) {
-    browser.storage.sync.set({on: on}, function() {
+    browser.storage.sync.set({on: on}, function () {
       var error = browser.runtime.lastError;
       if (error) {
         console.error('Failed to set the status:', error.message);
@@ -35,7 +35,7 @@ function setStatus(on, saveToStorage) {
 }
 
 function restoreSettings() {
-  browser.storage.sync.get({on: true}, function(items) {
+  browser.storage.sync.get({on: true}, function (items) {
     const error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to retrieve settings:', error.message);
@@ -47,7 +47,7 @@ function restoreSettings() {
 
 document.addEventListener('DOMContentLoaded', restoreSettings);
 
-onButton.addEventListener('click', function() {
+onButton.addEventListener('click', function () {
   if (pawblockOn) {
     return;
   }
@@ -55,7 +55,7 @@ onButton.addEventListener('click', function() {
   setStatus(true, true);
 });
 
-offButton.addEventListener('click', function() {
+offButton.addEventListener('click', function () {
   if (!pawblockOn) {
     return;
   }
@@ -113,7 +113,7 @@ confirmButton.addEventListener('click', () => {
   }
 });
 
-document.querySelector('#options-link').addEventListener('click', function() {
+document.querySelector('#options-link').addEventListener('click', function () {
   if (browser.runtime.openOptionsPage) {
     // New way to open options pages, if supported (Chrome 42+).
     browser.runtime.openOptionsPage();

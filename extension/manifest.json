@@ -43,7 +43,5 @@
     "tabs",
     "webNavigation"
   ],
-  "web_accessible_resources": [
-    "block.html"
-  ]
+  "web_accessible_resources": ["block.html"]
 }

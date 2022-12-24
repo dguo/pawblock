@@ -12,22 +12,22 @@ function changeIcon(on) {
 
   browser.browserAction.setIcon({
     path: {
-      '16': `images/icon-16-${status}.png`,
-      '32': `images/icon-32-${status}.png`,
-      '48': `images/icon-48-${status}.png`,
-      '128': `images/icon-128-${status}.png`
+      16: `images/icon-16-${status}.png`,
+      32: `images/icon-32-${status}.png`,
+      48: `images/icon-48-${status}.png`,
+      128: `images/icon-128-${status}.png`
     }
   });
 }
 
 // Disable the browser action icon if PawBlock is turned off
-browser.storage.sync.get({on: true}, function(items) {
+browser.storage.sync.get({on: true}, function (items) {
   if (!items.on) {
     changeIcon(false);
   }
 });
 
-browser.webNavigation.onCommitted.addListener(function(details) {
+browser.webNavigation.onCommitted.addListener(function (details) {
   // Avoid iFrame navigations
   if (details.frameId !== 0) {
     return;
@@ -39,7 +39,7 @@ browser.webNavigation.onCommitted.addListener(function(details) {
     on: true
   };
 
-  browser.storage.sync.get(storageQuery, function(items) {
+  browser.storage.sync.get(storageQuery, function (items) {
     var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to get data from storage:', error);
@@ -105,14 +105,14 @@ browser.webNavigation.onCommitted.addListener(function(details) {
   });
 });
 
-browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.closeTab && sender.tab && sender.tab.id) {
     browser.tabs.remove(sender.tab.id);
     return;
   }
 
   if (sender.tab && sender.tab.id) {
-    browser.storage.sync.set({allowedTabId: sender.tab.id}, function() {
+    browser.storage.sync.set({allowedTabId: sender.tab.id}, function () {
       var error = browser.runtime.lastError;
       sendResponse({error: Boolean(error)});
     });
@@ -124,7 +124,7 @@ browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   }
 });
 
-browser.storage.onChanged.addListener(changes => {
+browser.storage.onChanged.addListener((changes) => {
   if (
     changes.reenableMinutes &&
     !changes.reenableMinutes.newValue &&
@@ -144,7 +144,7 @@ browser.storage.onChanged.addListener(changes => {
       clearTimeout(reenableTimeoutId);
     }
   } else {
-    browser.storage.sync.get('reenableMinutes', items => {
+    browser.storage.sync.get('reenableMinutes', (items) => {
       if (items.reenableMinutes) {
         reenableTimeoutId = setTimeout(() => {
           browser.storage.sync.set({on: true});

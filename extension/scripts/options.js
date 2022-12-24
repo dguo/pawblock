@@ -33,7 +33,7 @@ function deleteRule() {
   // Remove the rule from the local state, the browser storage, and the UI
   var rule = rules[ruleIndex];
   rules.splice(ruleIndex, 1);
-  browser.storage.sync.set({rules: rules}, function() {
+  browser.storage.sync.set({rules: rules}, function () {
     var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to delete a rule:', error.message);
@@ -88,7 +88,7 @@ function addRule(domain, path) {
   };
 
   if (
-    rules.some(function(rule) {
+    rules.some(function (rule) {
       return rule.domain === newRule.domain && rule.path === newRule.path;
     })
   ) {
@@ -97,7 +97,7 @@ function addRule(domain, path) {
 
   // Add the new rule to the local state, the browser storage, and the UI
   rules.unshift(newRule);
-  browser.storage.sync.set({rules: rules}, function() {
+  browser.storage.sync.set({rules: rules}, function () {
     var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to save a new rule:', error.message);
@@ -152,7 +152,7 @@ function setStatus(on, saveToStorage) {
   }
 
   if (saveToStorage) {
-    browser.storage.sync.set({on: on}, function() {
+    browser.storage.sync.set({on: on}, function () {
       var error = browser.runtime.lastError;
       if (error) {
         console.error('Failed to set the status:', error.message);
@@ -172,7 +172,7 @@ function restoreSettings() {
     softBlockDelay: null
   };
 
-  browser.storage.sync.get(storageQuery, function(items) {
+  browser.storage.sync.get(storageQuery, function (items) {
     var error = browser.runtime.lastError;
     if (error) {
       console.error('Failed to retrieve settings:', error.message);
@@ -216,17 +216,17 @@ function restoreSettings() {
 
 document.addEventListener('DOMContentLoaded', restoreSettings);
 
-onButton.addEventListener('click', function() {
+onButton.addEventListener('click', function () {
   setStatus(true, true);
 });
 
-offButton.addEventListener('click', function() {
+offButton.addEventListener('click', function () {
   setStatus(false, true);
 });
 
 // Handle the user changing the status from the action popup while the options
 // page is open.
-browser.storage.onChanged.addListener(function(changes) {
+browser.storage.onChanged.addListener(function (changes) {
   if (changes.on) {
     setStatus(changes.on.newValue, false);
   }
@@ -236,8 +236,8 @@ document.querySelector('#add-rule').addEventListener('click', addRuleFromUI);
 
 // Allow adding a rule by pressing enter on the keyboard rather than
 // having to click the button
-document.querySelectorAll('input').forEach(function(input) {
-  input.onkeypress = function(e) {
+document.querySelectorAll('input').forEach(function (input) {
+  input.onkeypress = function (e) {
     if (e.keyCode === 13) {
       addRuleFromUI();
     }
@@ -246,7 +246,7 @@ document.querySelectorAll('input').forEach(function(input) {
 
 document.querySelector('#copyright').textContent = new Date().getFullYear();
 
-document.querySelector('#export').addEventListener('click', function() {
+document.querySelector('#export').addEventListener('click', function () {
   var data = new Blob([JSON.stringify({rules: rules})], {
     type: 'text/json;charset=utf-8'
   });
@@ -260,15 +260,15 @@ document.querySelector('#export').addEventListener('click', function() {
   });
 });
 
-document.querySelector('#import').addEventListener('click', function() {
+document.querySelector('#import').addEventListener('click', function () {
   hideErrorMessage();
   document.querySelector('#filepicker').click();
 });
 
-document.querySelector('#filepicker').addEventListener('change', function(e) {
+document.querySelector('#filepicker').addEventListener('change', function (e) {
   if (e.target.files.length) {
     var reader = new FileReader();
-    reader.onload = function(readerEvent) {
+    reader.onload = function (readerEvent) {
       var json;
       try {
         json = JSON.parse(readerEvent.target.result);
@@ -280,7 +280,7 @@ document.querySelector('#filepicker').addEventListener('change', function(e) {
       if (Array.isArray(json.rules)) {
         // Reverse so that the rules show up in the same order as they
         // originally were (new rules get prepended).
-        json.rules.reverse().forEach(function(rule) {
+        json.rules.reverse().forEach(function (rule) {
           if (rule.domain && typeof rule.domain === 'string') {
             addRule(
               rule.domain,
@@ -294,17 +294,17 @@ document.querySelector('#filepicker').addEventListener('change', function(e) {
   }
 });
 
-document.querySelector('#hard-block').addEventListener('change', function() {
+document.querySelector('#hard-block').addEventListener('change', function () {
   document.querySelector('#seconds').disabled = true;
   browser.storage.sync.set({blockType: 'hard'});
 });
 
-document.querySelector('#soft-block').addEventListener('change', function() {
+document.querySelector('#soft-block').addEventListener('change', function () {
   document.querySelector('#seconds').disabled = false;
   browser.storage.sync.set({blockType: 'soft'});
 });
 
-document.querySelector('#seconds').addEventListener('input', function(e) {
+document.querySelector('#seconds').addEventListener('input', function (e) {
   var seconds = 0;
 
   if (e.target.value) {
@@ -322,7 +322,7 @@ document.querySelector('#seconds').addEventListener('input', function(e) {
   browser.storage.sync.set({softBlockDelay: seconds});
 });
 
-document.querySelector('#re-enable').addEventListener('change', function() {
+document.querySelector('#re-enable').addEventListener('change', function () {
   const reenableMinutes = document.querySelector('#re-enable-minutes');
   reenableMinutes.disabled = false;
   let minutes = parseInt(reenableMinutes.value);
@@ -333,14 +333,14 @@ document.querySelector('#re-enable').addEventListener('change', function() {
   browser.storage.sync.set({reenableMinutes: minutes});
 });
 
-document.querySelector('#no-re-enable').addEventListener('change', function() {
+document.querySelector('#no-re-enable').addEventListener('change', function () {
   document.querySelector('#re-enable-minutes').disabled = true;
   browser.storage.sync.set({reenableMinutes: null});
 });
 
 document
   .querySelector('#re-enable-minutes')
-  .addEventListener('input', function(e) {
+  .addEventListener('input', function (e) {
     let minutes;
 
     if (e.target.value) {
