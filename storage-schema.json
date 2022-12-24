@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://github.com/dguo/pawblock/blob/master/storage-schema.json",
+  "id": "https://github.com/dguo/pawblock/blob/main/storage-schema.json",
   "description": "Schema for PawBlock's browser storage state",
   "type": "object",
   "properties": {

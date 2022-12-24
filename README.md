@@ -1,7 +1,7 @@
 # PawBlock
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/07e5b357-76a0-4481-b896-0b240e9075bf/deploy-status)](https://app.netlify.com/sites/pawblock/deploys)
-[![CI status](https://github.com/dguo/pawblock/workflows/CI/badge.svg)](https://github.com/dguo/pawblock/actions?query=branch%3Amaster)
+[![CI status](https://github.com/dguo/pawblock/workflows/CI/badge.svg)](https://github.com/dguo/pawblock/actions?query=branch%3Amain)
 
 [PawBlock](https://www.pawblock.dannyguo.com) is a [browser
 extension](https://en.wikipedia.org/wiki/Browser_extension) for beating
@@ -22,4 +22,4 @@ for screenshots and a FAQ.
 
 ## License
 
-[MIT](https://github.com/dguo/pawblock/blob/master/LICENSE)
+[MIT](https://github.com/dguo/pawblock/blob/main/LICENSE)
