@@ -9,7 +9,8 @@
     "format:check": "prettier --list-different '**/*.js'",
     "lint": "eslint '**/*.js'",
     "release": "yarn install && yarn format:check && yarn lint && yarn build && web-ext lint && web-ext build --overwrite-dest",
-    "start": "yarn install && yarn build",
+    "start": "yarn install && yarn build && web-ext run --firefox=firefoxdeveloperedition",
+    "start:chrome": "yarn install && yarn build && web-ext run --target=chromium",
     "test": "jest"
   },
   "repository": {
