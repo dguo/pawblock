@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "PawBlock",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Block websites to prevent procrastination and excessive web surfing.",
   "applications": {
     "gecko": {
@@ -40,7 +40,6 @@
     "http://*/*",
     "downloads",
     "storage",
-    "tabs",
     "webNavigation"
   ],
   "web_accessible_resources": ["block.html"]
