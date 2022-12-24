@@ -29,14 +29,14 @@ function loadRandomSet() {
 }
 
 fetch('https://s3.us-east-2.amazonaws.com/pawblock-sources/images.json')
-  .then(function(res) {
+  .then(function (res) {
     return res.json();
   })
-  .then(function(json) {
+  .then(function (json) {
     sets = sets.concat(json.sets);
     loadRandomSet();
   })
-  .catch(function(err) {
+  .catch(function (err) {
     console.error('Failed to get images json:', err);
 
     happyImage.src = 'images/default-happy.jpg';
@@ -45,7 +45,7 @@ fetch('https://s3.us-east-2.amazonaws.com/pawblock-sources/images.json')
 
 var targetUrl = '';
 var params = window.location.search.substring(1).split('&');
-params.forEach(function(param) {
+params.forEach(function (param) {
   var split = param.split('=');
   if (split[0] === 'target') {
     targetUrl = decodeURIComponent(split[1]);
@@ -55,17 +55,17 @@ params.forEach(function(param) {
 document.querySelector('#target').textContent =
   targetUrl.length > 80 ? targetUrl.substr(0, 80) + '...' : targetUrl;
 
-happyImage.onerror = function() {
+happyImage.onerror = function () {
   console.error('Failed to load:', happyImage.src);
   happyImage.src = 'images/default-happy.jpg';
 };
 
-sadImage.onerror = function() {
+sadImage.onerror = function () {
   console.error('Failed to load:', sadImage.src);
   sadImage.src = 'images/default-sad.jpg';
 };
 
-backButton.addEventListener('click', function() {
+backButton.addEventListener('click', function () {
   window.history.back();
 
   /* Close the tab if there's nothing to go back to. Use a timeout because
@@ -74,28 +74,30 @@ backButton.addEventListener('click', function() {
      included in the count. Without a timeout, the tab will always close.
      Don't use window.close because Firefox doesn't allow a script to close a
      window it didn't open. */
-  setTimeout(function() {
+  setTimeout(function () {
     browser.runtime.sendMessage({closeTab: true});
   }, 500);
 });
 
-backButton.addEventListener('mouseenter', function() {
+backButton.addEventListener('mouseenter', function () {
   happyImage.style.display = 'inline';
   sadImage.style.display = 'none';
 });
 
-backButton.addEventListener('mouseleave', function() {
+backButton.addEventListener('mouseleave', function () {
   happyImage.style.display = 'none';
   sadImage.style.display = 'inline';
 });
 
-document.querySelector('#refresh-button').addEventListener('click', function() {
-  loadRandomSet();
-});
+document
+  .querySelector('#refresh-button')
+  .addEventListener('click', function () {
+    loadRandomSet();
+  });
 
 document
   .querySelector('#continue-button')
-  .addEventListener('click', function() {
+  .addEventListener('click', function () {
     if (this.getAttribute('disabled')) {
       return;
     }
@@ -105,7 +107,7 @@ document
       return;
     }
 
-    browser.runtime.sendMessage(null, {allow: true}, null, function(response) {
+    browser.runtime.sendMessage(null, {allow: true}, null, function (response) {
       if (response.error) {
         document.querySelector('#message').style.display = 'block';
       } else {
@@ -115,7 +117,7 @@ document
     });
   });
 
-document.querySelector('#options-link').onclick = function() {
+document.querySelector('#options-link').onclick = function () {
   if (browser.runtime.openOptionsPage) {
     // New way to open options pages, if supported (Chrome 42+).
     browser.runtime.openOptionsPage();
@@ -131,7 +133,7 @@ browser.storage.sync.get(
     blockType: 'soft',
     softBlockDelay: 5
   },
-  function(items) {
+  function (items) {
     var continueButton = document.querySelector('#continue-button');
     if (items.blockType === 'hard') {
       continueButton.style.display = 'none';
@@ -145,7 +147,7 @@ browser.storage.sync.get(
       var counter = items.softBlockDelay;
       continueText.innerText = counter;
 
-      var countdown = setInterval(function() {
+      var countdown = setInterval(function () {
         counter--;
         continueText.innerText = counter;
         if (counter <= 0) {
