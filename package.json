@@ -8,7 +8,7 @@
     "format": "prettier --write '**/*.js'",
     "format:check": "prettier --list-different '**/*.js'",
     "lint": "eslint '**/*.js'",
-    "release": "yarn install && yarn format:check && yarn lint && yarn build && web-ext lint && web-ext build --overwrite-dest",
+    "release": "yarn install && yarn format:check && yarn lint && yarn build && web-ext lint && web-ext build --overwrite-dest && git archive -o web-ext-artifacts/source-code.zip HEAD",
     "start": "yarn install && yarn build && web-ext run --firefox=firefoxdeveloperedition",
     "start:chrome": "yarn install && yarn build && web-ext run --target=chromium",
     "test": "jest"
