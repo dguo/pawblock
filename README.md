@@ -20,6 +20,12 @@ for screenshots and a FAQ.
 * [WasteNoTime](http://www.bumblebeesystems.com/wastenotime/)
 * [Block Site](https://chrome.google.com/webstore/detail/block-site/eiimnmioipafcokbfikbljfdeojpcgbh)
 
+## Firefox Review Instructions
+
+With Node and Yarn installed (see the versions specified in `.tool_versions`),
+you can run `yarn release` to generate the ZIP file in the `web-ext-artifacts`
+folder.
+
 ## License
 
 [MIT](https://github.com/dguo/pawblock/blob/main/LICENSE)
