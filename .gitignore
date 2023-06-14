@@ -8,3 +8,13 @@ extension/fonts/[fF]ont[aA]wesome*
 extension/styles/bulma.css
 extension/styles/font-awesome.min.css
 web-ext-artifacts/
+
+# Yarn
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
