@@ -17,7 +17,7 @@ for screenshots and a FAQ.
 ## Alternatives
 
 * [StayFocusd](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji)
-* [WasteNoTime](http://www.bumblebeesystems.com/wastenotime/)
+* ~~[WasteNoTime](http://www.bumblebeesystems.com/wastenotime/)~~ (This extension is no longer supported, [more info here](https://www.bumblebeesystems.com/wastenotime/#:~:text=Update%20(2024%2D01%2D01)%20WasteNoTime%20extension%20is%20no%20longer%20supported%20due%20to%20Google%27s%20enforcement%20of%20Manifest%20V3%20on%20Chrome%2C%20which%20is%20incompatible%20with%20WasteNoTime.))
 * [Block Site](https://chrome.google.com/webstore/detail/block-site/eiimnmioipafcokbfikbljfdeojpcgbh)
 
 ## Firefox Review Instructions
